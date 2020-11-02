@@ -1,0 +1,45 @@
+{
+  "name": "payvision",
+  "version": "1.0.0",
+  "description": "Payvision driver for the WordPress payment processing library.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wp-pay-gateways/payvision"
+  },
+  "keywords": [
+    "wordpress",
+    "wp",
+    "pay",
+    "payvision",
+    "gateway",
+    "pronamic"
+  ],
+  "author": {
+    "name": "Pronamic",
+    "email": "info@pronamic.nl",
+    "url": "https://www.pronamic.nl/"
+  },
+  "contributors": [
+    {
+      "name": "Remco Tolsma",
+      "email": "info@remcotolsma.nl",
+      "url": "https://www.remcotolsma.nl/"
+    }
+  ],
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/wp-pay-gateways/payvision/issues"
+  },
+  "homepage": "https://www.wp-pay.org/gateways/payvision/",
+  "scripts": {
+    "babel": "babel ./js/src -d ./js/dist --source-maps",
+    "eslint": "eslint . --ext .json --ext .js"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "eslint": "^7.12.1",
+    "eslint-plugin-json": "^2.1.2"
+  }
+}
