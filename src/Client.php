@@ -44,19 +44,19 @@ class Client {
 	 * @return object
 	 * @throws \Exception Throws exception when error occurs.
 	 */
-	public function send_request( $method, $request ) {
+	public function send_request( $method, $path, $request = null ) {
 		// Request.
-		$url = 'https://stagconnect.acehubpaymentservices.com/gateway/v3/payments';
+		$url = 'https://stagconnect.acehubpaymentservices.com/gateway/v3/' . $path;
 
 		$response = \wp_remote_request(
 			$url,
 			array(
-				'method'  => 'POST',
+				'method'  => $method,
 				'headers' => array(
 					'Authorization' => 'Basic ' . base64_encode( $this->config->username . ':' . $this->config->password ),
 					'Content-Type'  => 'application/json',
 				),
-				'body'    => \wp_json_encode( $request ),
+				'body'    => $request,
 			)
 		);
 

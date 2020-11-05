@@ -18,25 +18,45 @@ namespace Pronamic\WordPress\Pay\Gateways\Payvision;
  * @since   1.0.0
  */
 class PaymentRequest implements \JsonSerializable {
+	/**
+	 * Header.
+	 *
+	 * @var RequestHeader
+	 */
+	private $header;
+
+	/**
+	 * Transaction.
+	 *
+	 * @var Transaction
+	 */
+	private $transaction;
+
+	/**
+	 * Bank.
+	 *
+	 * @var BankDetails
+	 */
+	public $bank;
+
+	/**
+	 * Construct and initialize payment request
+	 *
+	 * @param RequestHeader $header      Header.
+	 * @param Transaction   $transaction Transaction.
+	 */
+	public function __construct( $header, $transaction ) {
+		$this->header      = $header;
+		$this->transaction = $transaction;
+	}
+
 	public function jsonSerialize() {
 		return (object) array(
 			'action' => 'payment',
-			'header' => (object) array(
-				'businessId' => $this->business_id,
-			),
+			'header' => $this->header,
 			'body'   => (object) array(
-				'transaction' => (object) array(
-					'storeId'      => $this->store_id,
-					'amount'       => $this->amount,
-					'currencyCode' => $this->currency_code,
-					'trackingCode' => $this->tracking_code,
-					'brandId'      => $this->brand_id,
-					'purchaseId'   => $this->purchase_id,
-					'returnUrl'    => $this->return_url,
-				),
-				'bank'         => (object) array(
-					'issuerId' => $this->issuer_id,
-				),
+				'transaction' => $this->transaction,
+				'bank'        => $this->bank,
 			),
 		);
 	}

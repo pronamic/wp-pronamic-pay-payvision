@@ -48,10 +48,7 @@ class Integration extends AbstractGatewayIntegration {
 					\__( 'live', 'pronamic_ideal' ) => 'https://ca-live.payvision.com/ca/ca/login.shtml',
 				),
 				'manual_url'    => \__( 'https://www.pronamic.eu/manuals/using-payvision-pronamic-pay/', 'pronamic_ideal' ),
-				'supports'      => array(
-					'webhook',
-					'webhook_log',
-				),
+				'supports'      => array(),
 			)
 		);
 
