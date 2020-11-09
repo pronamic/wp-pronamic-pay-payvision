@@ -2,6 +2,7 @@
 
 ```
 From: Payvision TechnicalSupport <TechnicalSupport@payvision.com>
+Subject: Payvision test account
 Date: Tue, 29 Sep 2020 14:49:04 +0000
 ```
 
@@ -22,3 +23,17 @@ Date: Tue, 29 Sep 2020 14:49:04 +0000
 > Amsterdam (Netherlands)
 > E             ●●●●●●●●●●●●●●@payvision.com
 > payvision.com
+
+```
+From: Payvision NoReply <noreply-tech@payvision.com>
+Subject: your Payvision portal login credentials
+Date: Tue, 29 Sep 2020 14:42:12 +0000
+```
+
+> Hello Remco Tolsma,
+> 
+> These are your Staging Portal credentials:
+> 
+> Link: [Acecontrol TEST](https://tools.payvisionservices.com/acecontrol/dashboard)
+> Your emailaddress as stated in your application form is your user name (note, the user name is case sensitive, so if you entered your email address in capitals then use capitals when entering your username as well)
+> Password: ●●●●●●●●●●●●●●●●
