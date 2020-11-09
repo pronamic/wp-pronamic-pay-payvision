@@ -49,9 +49,20 @@ class Transaction implements \JsonSerializable {
 	/**
 	 * Brand ID.
 	 *
+	 * Identifies the transaction payment brand. Mandatory for all transactions, except for card transactions when your configuration allows the presence of the card block to be enough. See brand list.
+	 *
 	 * @var string|null
 	 */
 	public $brand_id;
+
+	/**
+	 * Language code.
+	 *
+	 * Language code (ISO 639-1) for language to be used for customer UI for alternative payment brands. Only supported by some payment brands. Languages supported depends on the brand.
+	 *
+	 * @var string|null
+	 */
+	public $language_code;
 
 	/**
 	 * Purchase ID.
@@ -94,6 +105,7 @@ class Transaction implements \JsonSerializable {
 			'currencyCode' => $this->currency_code,
 			'trackingCode' => $this->tracking_code,
 			'brandId'      => $this->brand_id,
+			'languageCode' => $this->language_code,
 			'purchaseId'   => $this->purchase_id,
 			'returnUrl'    => $this->return_url,
 		);

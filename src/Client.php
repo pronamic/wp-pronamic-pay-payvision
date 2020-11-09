@@ -123,8 +123,8 @@ class Client {
 		}
 
 		// Error.
-		if ( isset( $data->error ) ) {
-			$error = Error::from_object( $data->error );
+		if ( isset( $data->body->error ) ) {
+			$error = Error::from_json( $data->body->error );
 
 			throw $error;
 		}

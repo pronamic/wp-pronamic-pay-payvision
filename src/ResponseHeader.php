@@ -51,7 +51,7 @@ class ResponseHeader {
 		$header = new self( $object->requestTimestamp );
 
 		if ( \property_exists( $object, 'requestCode' ) ) {
-			$header->request_code = $object->requestCode;	
+			$header->request_code = $object->requestCode;
 		}
 
 		return $header;

@@ -113,32 +113,32 @@ class Integration extends AbstractGatewayIntegration {
 
 		// User.
 		$fields[] = array(
-			'section'     => 'general',
-			'filter'      => FILTER_SANITIZE_STRING,
-			'meta_key'    => '_pronamic_gateway_payvision_username',
-			'title'       => _x( 'User', 'payvision', 'pronamic_ideal' ),
-			'type'        => 'text',
+			'section'  => 'general',
+			'filter'   => FILTER_SANITIZE_STRING,
+			'meta_key' => '_pronamic_gateway_payvision_username',
+			'title'    => _x( 'User', 'payvision', 'pronamic_ideal' ),
+			'type'     => 'text',
 			'classes'  => array( 'regular-text', 'code' ),
 		);
 
 		// Password.
 		$fields[] = array(
-			'section'     => 'general',
-			'filter'      => FILTER_SANITIZE_STRING,
-			'meta_key'    => '_pronamic_gateway_payvision_password',
-			'title'       => _x( 'Password', 'payvision', 'pronamic_ideal' ),
-			'type'        => 'text',
-			'classes'     => array( 'regular-text', 'code' ),
+			'section'  => 'general',
+			'filter'   => FILTER_SANITIZE_STRING,
+			'meta_key' => '_pronamic_gateway_payvision_password',
+			'title'    => _x( 'Password', 'payvision', 'pronamic_ideal' ),
+			'type'     => 'text',
+			'classes'  => array( 'regular-text', 'code' ),
 		);
 
 		// Store Id.
 		$fields[] = array(
-			'section'     => 'general',
-			'filter'      => FILTER_SANITIZE_STRING,
-			'meta_key'    => '_pronamic_gateway_payvision_store_id',
-			'title'       => _x( 'Store ID', 'payvision', 'pronamic_ideal' ),
-			'type'        => 'text',
-			'classes'     => array( 'regular-text', 'code' ),
+			'section'  => 'general',
+			'filter'   => FILTER_SANITIZE_STRING,
+			'meta_key' => '_pronamic_gateway_payvision_store_id',
+			'title'    => _x( 'Store ID', 'payvision', 'pronamic_ideal' ),
+			'type'     => 'text',
+			'classes'  => array( 'regular-text', 'code' ),
 		);
 
 		// Return fields.

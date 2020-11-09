@@ -10,8 +10,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\Payvision;
 
-use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
-use Pronamic\WordPress\Pay\Core\GatewayConfig;
+use Pronamic\WordPress\Pay\Core\PaymentMethods;
 
 /**
  * Brand ID
@@ -23,9 +22,67 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
  */
 class BrandId {
 	/**
-	 * ABN Amro.
+	 * VISA.
+	 *
+	 * @var string
+	 */
+	const VISA = '1010';
+
+	/**
+	 * American Express.
+	 *
+	 * @var string
+	 */
+	const AMERICAN_EXPRESS = '1030';
+
+	/**
+	 * Bancontact (BCMC = Bancontact / Mister Cash).
+	 *
+	 * @var string
+	 */
+	const BCMC = '1210';
+
+	/**
+	 * IDeal.
 	 *
 	 * @var string
 	 */
 	const IDEAL = '3010';
+
+	/**
+	 * PayPal.
+	 *
+	 * @var string
+	 */
+	const PAYPAL = '4010';
+
+	/**
+	 * Afterpay.
+	 *
+	 * @var string
+	 */
+	const AFTERPAY = '5020';
+
+	/**
+	 * From core.
+	 *
+	 * @param string $method Method.
+	 * @return string|null
+	 */
+	public static function from_core( $method ) {
+		switch ( $method ) {
+			case PaymentMethods::AFTERPAY:
+				return self::AFTERPAY;
+			case PaymentMethods::BANCONTACT:
+				return self::BCMC;
+			case PaymentMethods::IDEAL:
+				return self::IDEAL;
+			case PaymentMethods::PAYPAL:
+				return self::PAYPAL;
+			case PaymentMethods::AFTERPAY:
+				return self::AFTERPAY;
+			default:
+				return null;
+		}
+	}
 }

@@ -58,8 +58,8 @@ class TransactionResponse {
 	/**
 	 * Construct and initialize transaction response.
 	 *
-	 * @param string         $action Action.
-	 * @param string         $id     ID.
+	 * @param string $action Action.
+	 * @param string $id     ID.
 	 * @param string $tracking_code      Header.
 	 */
 	public function __construct( $action, $id, $tracking_code, $amount, $currency_code ) {
