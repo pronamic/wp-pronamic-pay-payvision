@@ -86,7 +86,7 @@ class Gateway extends Core_Gateway {
 		return array(
 			PaymentMethods::BANCONTACT,
 			PaymentMethods::CREDIT_CARD,
-			PaymentMethods::DIRECT_DEBIT,
+			PaymentMethods::MAESTRO,
 			PaymentMethods::IDEAL,
 			PaymentMethods::PAYPAL,
 			PaymentMethods::AFTERPAY,
@@ -121,17 +121,29 @@ class Gateway extends Core_Gateway {
 
 		$transaction->brand_id = BrandId::from_core( $payment->get_method() );
 
-		$customer = $payment->get_customer();
+		$payment_request = new PaymentRequest( $header, $transaction );
 
-		if ( null !== $customer ) {
-			$locale = $customer->get_locale();
+		$core_customer = $payment->get_customer();
+
+		if ( null !== $core_customer ) {
+			$locale = $core_customer->get_locale();
 
 			if ( \is_string( $locale ) ) {
 				$transaction->language_code = \substr( $locale, 0, 2 );
 			}
-		}
 
-		$payment_request = new PaymentRequest( $header, $transaction );
+			$customer = new Customer();
+
+			$customer->email = $core_customer->get_email();
+
+			$payment_request->customer = $customer;
+
+			$core_name = $core_customer->get_name();
+
+			if ( null !== $core_name ) {
+				$customer->family_name = $core_name->get_last_name();
+			}
+		}
 
 		$bank = new BankDetails();
 
@@ -148,9 +160,7 @@ class Gateway extends Core_Gateway {
 		$object = $this->client->send_request( 'POST', 'payments', wp_json_encode( $payment_request ) );
 
 		$payment_response = PaymentResponse::from_json( $object );
-var_dump( $object );
-var_dump( $payment_response );
-exit;
+
 		if ( null !== $payment_response->redirect ) {
 			$payment->set_action_url( $payment_response->redirect->url );
 		}

@@ -44,6 +44,7 @@ class ResponseHeader {
 	/**
 	 * From JSON.
 	 *
+	 * @link https://github.com/WordPress/wp-notify/blob/develop/includes/JsonUnserializable.php
 	 * @param object $object
 	 * @return self
 	 */

@@ -36,6 +36,13 @@ class BrandId {
 	const AMERICAN_EXPRESS = '1030';
 
 	/**
+	 * Maestro.
+	 *
+	 * @var string
+	 */
+	const MAESTRO = '1050';
+
+	/**
 	 * Bancontact (BCMC = Bancontact / Mister Cash).
 	 *
 	 * @var string
@@ -81,6 +88,8 @@ class BrandId {
 				return self::PAYPAL;
 			case PaymentMethods::AFTERPAY:
 				return self::AFTERPAY;
+			case PaymentMethods::MAESTRO:
+				return self::MAESTRO;
 			default:
 				return null;
 		}

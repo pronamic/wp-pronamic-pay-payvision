@@ -40,6 +40,15 @@ class PaymentRequest implements \JsonSerializable {
 	public $bank;
 
 	/**
+	 * Customer.
+	 *
+	 * Customer specific data. Needed for some alternative payment methods and fraud checks.
+	 *
+	 * @var Customer
+	 */
+	public $customer;
+
+	/**
 	 * Construct and initialize payment request
 	 *
 	 * @param RequestHeader $header      Header.
@@ -57,6 +66,7 @@ class PaymentRequest implements \JsonSerializable {
 			'body'   => (object) array(
 				'transaction' => $this->transaction,
 				'bank'        => $this->bank,
+				'customer'    => $this->customer,
 			),
 		);
 	}
