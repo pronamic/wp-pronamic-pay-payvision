@@ -44,8 +44,8 @@ class Integration extends AbstractGatewayIntegration {
 				'url'           => \__( 'https://www.payvision.com/', 'pronamic_ideal' ),
 				'product_url'   => \__( 'https://www.payvision.com/pricing', 'pronamic_ideal' ),
 				'dashboard_url' => array(
-					\__( 'test', 'pronamic_ideal' ) => 'https://ca-test.payvision.com/ca/ca/login.shtml',
-					\__( 'live', 'pronamic_ideal' ) => 'https://ca-live.payvision.com/ca/ca/login.shtml',
+					\__( 'test', 'pronamic_ideal' ) => 'https://tools.payvisionservices.com/acecontrol/dashboard',
+					\__( 'live', 'pronamic_ideal' ) => 'https://tools.payvisionservices.com/acecontrol/dashboard',
 				),
 				'manual_url'    => \__( 'https://www.pronamic.eu/manuals/using-payvision-pronamic-pay/', 'pronamic_ideal' ),
 				'supports'      => array(),
