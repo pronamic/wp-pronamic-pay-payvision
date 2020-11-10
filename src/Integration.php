@@ -42,7 +42,7 @@ class Integration extends AbstractGatewayIntegration {
 				'name'          => 'Payvision',
 				'provider'      => 'payvision',
 				'url'           => \__( 'https://www.payvision.com/', 'pronamic_ideal' ),
-				'product_url'   => \__( 'https://www.payvision.com/pricing', 'pronamic_ideal' ),
+				'product_url'   => \__( 'https://www.payvision.com/', 'pronamic_ideal' ),
 				'dashboard_url' => array(
 					\__( 'test', 'pronamic_ideal' ) => 'https://tools.payvisionservices.com/acecontrol/dashboard',
 					\__( 'live', 'pronamic_ideal' ) => 'https://tools.payvisionservices.com/acecontrol/dashboard',
