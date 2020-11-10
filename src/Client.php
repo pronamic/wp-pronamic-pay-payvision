@@ -129,14 +129,6 @@ class Client {
 			throw $error;
 		}
 
-		// Service Exception.
-		// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Payvision JSON object.
-		if ( isset( $data->status, $data->errorCode, $data->message, $data->errorType ) ) {
-			$service_exception = ServiceException::from_object( $data );
-
-			throw $service_exception;
-		}
-
 		return $data;
 	}
 }

@@ -1,0 +1,29 @@
+<?php
+/**
+ * Config Test
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2020 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay\Gateways\Payvision
+ */
+
+namespace Pronamic\WordPress\Pay\Gateways\Payvision;
+
+/**
+ * Config Test
+ *
+ * @author  Remco Tolsma
+ * @version 1.0.0
+ * @since   1.0.0
+ */
+class ConfigTest extends \WP_UnitTestCase {
+	/**
+	 * Test.
+	 */
+	public function test() {
+		$config = new Config( '123456', 'Test', '●●●●●●●●', '1' );
+
+		$this->assertInstanceOf( Config::class, $config );
+	}
+}

@@ -43,7 +43,7 @@ class PaymentResponse {
 	/**
 	 * Transaction.
 	 *
-	 * @var Transaction|null
+	 * @var TransactionResponse|null
 	 */
 	public $transaction;
 

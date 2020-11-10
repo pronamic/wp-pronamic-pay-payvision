@@ -32,6 +32,13 @@ use WP_Error;
  */
 class Gateway extends Core_Gateway {
 	/**
+	 * Client.
+	 *
+	 * @var Client
+	 */
+	private $client;
+
+	/**
 	 * Constructs and initializes an Payvision gateway.
 	 *
 	 * @param Config $config Config.
