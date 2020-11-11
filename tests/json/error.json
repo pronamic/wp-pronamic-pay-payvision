@@ -1,0 +1,5 @@
+{
+  "code": 1004,
+  "message": "Property not found in request: body.card.number.",
+  "detailedMessage": "Property not found in request: body.card.number."
+}

@@ -39,8 +39,9 @@ class Client {
 	/**
 	 * Send request with the specified action and parameters
 	 *
-	 * @param string  $method  Payvision API method.
-	 * @param Request $request Request object.
+	 * @param string                       $method  Payvision API method.
+	 * @param string                       $path    Path.
+	 * @param object|string[]|string|false $request Request object.
 	 * @return object
 	 * @throws \Exception Throws exception when error occurs.
 	 */
@@ -123,10 +124,12 @@ class Client {
 		}
 
 		// Error.
-		if ( isset( $data->body->error ) ) {
-			$error = Error::from_json( $data->body->error );
+		if ( \property_exists( $data, 'body' ) ) {
+			if ( isset( $data->body->error ) ) {
+				$error = Error::from_json( $data->body->error );
 
-			throw $error;
+				throw $error;
+			}
 		}
 
 		return $data;

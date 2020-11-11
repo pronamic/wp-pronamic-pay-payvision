@@ -33,13 +33,6 @@ class RedirectDetails {
 	public $url;
 
 	/**
-	 * Hidden fields (parameters) to post in the body of the message (can be present for redirect method POST only).
-	 *
-	 * @var array|null
-	 */
-	public $fields;
-
-	/**
 	 * From JSON.
 	 *
 	 * @link https://github.com/WordPress/wp-notify/blob/develop/includes/JsonUnserializable.php
@@ -55,10 +48,6 @@ class RedirectDetails {
 
 		if ( \property_exists( $object, 'url' ) ) {
 			$redirect->url = $object->url;
-		}
-
-		if ( \property_exists( $object, 'fields' ) ) {
-			$redirect->fields = $object->fields;
 		}
 
 		return $redirect;

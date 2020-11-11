@@ -49,7 +49,9 @@ class Gateway extends Core_Gateway {
 		$this->set_method( self::METHOD_HTTP_REDIRECT );
 
 		// Supported features.
-		$this->supports = array();
+		$this->supports = array(
+			'payment_status_request',
+		);
 
 		// Client.
 		$this->client = new Client( $config );
@@ -91,12 +93,7 @@ class Gateway extends Core_Gateway {
 	 */
 	public function get_supported_payment_methods() {
 		return array(
-			PaymentMethods::BANCONTACT,
-			PaymentMethods::CREDIT_CARD,
-			PaymentMethods::MAESTRO,
 			PaymentMethods::IDEAL,
-			PaymentMethods::PAYPAL,
-			PaymentMethods::AFTERPAY,
 		);
 	}
 
@@ -109,67 +106,54 @@ class Gateway extends Core_Gateway {
 	 * @return void
 	 */
 	public function start( Payment $payment ) {
-		$header = new RequestHeader( $this->config->business_id );
+		$header = new RequestHeader( $this->config->get_business_id() );
 
-		$tracking_code = \sprintf(
-			'%08s',
-			$payment->get_id()
-		);
+		$payment_id = $payment->get_id();
+
+		if ( null === $payment_id ) {
+			throw new \InvalidArgumentException( 'Can not start payment with empty ID.' );
+		}
+
+		$currency_code = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
+
+		if ( null === $currency_code ) {
+			throw new \InvalidArgumentException( 'Can not start payment with empty currency code.' );
+		}
+
+		$tracking_code = TrackingCode::from_id( $payment_id );
 
 		$transaction = new Transaction(
-			$this->config->store_id,
+			$this->config->get_store_id(),
 			$payment->get_total_amount()->get_value(),
-			$payment->get_total_amount()->get_currency()->get_alphabetic_code(),
+			$currency_code,
 			$tracking_code
 		);
 
-		$transaction->purchase_id = $payment->get_id();
-		$transaction->return_url  = $payment->get_return_url();
-
-		$transaction->brand_id = BrandId::from_core( $payment->get_method() );
+		$transaction->set_purchase_id( \strval( $payment->get_id() ) );
+		$transaction->set_return_url( $payment->get_return_url() );
+		$transaction->set_brand_id( BrandId::from_core( $payment->get_method() ) );
 
 		$payment_request = new PaymentRequest( $header, $transaction );
 
-		$core_customer = $payment->get_customer();
+		if ( BrandId::IDEAL === $transaction->get_brand_id() ) {
+			$bank = new BankDetails();
 
-		if ( null !== $core_customer ) {
-			$locale = $core_customer->get_locale();
+			$bank->set_issuer_id( $payment->get_issuer() );
 
-			if ( \is_string( $locale ) ) {
-				$transaction->language_code = \substr( $locale, 0, 2 );
-			}
-
-			$customer = new Customer();
-
-			$customer->email = $core_customer->get_email();
-
-			$payment_request->customer = $customer;
-
-			$core_name = $core_customer->get_name();
-
-			if ( null !== $core_name ) {
-				$customer->family_name = $core_name->get_last_name();
-			}
+			$payment_request->set_bank( $bank );
 		}
 
-		$bank = new BankDetails();
+		$payment->set_meta( 'payvision_business_id', $this->config->get_business_id() );
+		$payment->set_meta( 'payvision_tracking_code', \strval( $tracking_code ) );
 
-		if ( BrandId::IDEAL === $transaction->brand_id ) {
-			// https://developers.acehubpaymentservices.com/v3.3/reference#issuer-id-ideal
-			$bank->issuer_id = $payment->get_issuer();
-		}
-
-		$payment_request->bank = $bank;
-
-		$payment->set_meta( 'payvision_business_id', $this->config->business_id );
-		$payment->set_meta( 'payvision_tracking_code', $tracking_code );
-
-		$object = $this->client->send_request( 'POST', 'payments', wp_json_encode( $payment_request ) );
+		$object = $this->client->send_request( 'POST', 'payments', \wp_json_encode( $payment_request ) );
 
 		$payment_response = PaymentResponse::from_json( $object );
 
 		if ( null !== $payment_response->redirect ) {
-			$payment->set_action_url( $payment_response->redirect->url );
+			if ( null !== $payment_response->redirect->url ) {
+				$payment->set_action_url( $payment_response->redirect->url );
+			}
 		}
 
 		if ( null !== $payment_response->transaction ) {

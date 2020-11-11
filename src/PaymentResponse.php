@@ -83,14 +83,28 @@ class PaymentResponse {
 	 * @return self
 	 */
 	public static function from_json( $object ) {
-		$response = new self( $object->result, $object->description, ResponseHeader::from_json( $object->header ) );
-
-		if ( property_exists( $object->body, 'redirect' ) ) {
-			$response->redirect = RedirectDetails::from_json( $object->body->redirect );
+		if ( ! property_exists( $object, 'result' ) ) {
+			throw new \InvalidArgumentException( 'Object must contain `result` property.' );
 		}
 
-		if ( property_exists( $object->body, 'transaction' ) ) {
-			$response->transaction = TransactionResponse::from_json( $object->body->transaction );
+		if ( ! property_exists( $object, 'description' ) ) {
+			throw new \InvalidArgumentException( 'Object must contain `description` property.' );
+		}
+
+		if ( ! property_exists( $object, 'header' ) ) {
+			throw new \InvalidArgumentException( 'Object must contain `header` property.' );
+		}
+
+		$response = new self( $object->result, $object->description, ResponseHeader::from_json( $object->header ) );
+
+		if ( property_exists( $object, 'body' ) ) {
+			if ( property_exists( $object->body, 'redirect' ) ) {
+				$response->redirect = RedirectDetails::from_json( $object->body->redirect );
+			}
+
+			if ( property_exists( $object->body, 'transaction' ) ) {
+				$response->transaction = TransactionResponse::from_json( $object->body->transaction );
+			}
 		}
 
 		return $response;

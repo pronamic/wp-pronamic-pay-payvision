@@ -44,23 +44,25 @@ class TransactionResponse {
 	/**
 	 * Amount of the transaction.
 	 *
-	 * @var string
+	 * @var string|float|int
 	 */
 	private $amount;
 
 	/**
 	 * Currency code of the amount of the transaction.
 	 *
-	 * @var RedirectDetails|null
+	 * @var string
 	 */
 	private $currency_code;
 
 	/**
 	 * Construct and initialize transaction response.
 	 *
-	 * @param string $action Action.
-	 * @param string $id     ID.
-	 * @param string $tracking_code      Header.
+	 * @param string           $action        Action.
+	 * @param string           $id            ID.
+	 * @param string           $tracking_code Tracking code.
+	 * @param string|float|int $amount        Amount.
+	 * @param string           $currency_code Currency code.
 	 */
 	public function __construct( $action, $id, $tracking_code, $amount, $currency_code ) {
 		$this->action        = $action;
@@ -78,6 +80,26 @@ class TransactionResponse {
 	 * @return self
 	 */
 	public static function from_json( $object ) {
+		if ( ! property_exists( $object, 'action' ) ) {
+			throw new \InvalidArgumentException( 'Object must contain `action` property.' );
+		}
+
+		if ( ! property_exists( $object, 'id' ) ) {
+			throw new \InvalidArgumentException( 'Object must contain `id` property.' );
+		}
+
+		if ( ! property_exists( $object, 'trackingCode' ) ) {
+			throw new \InvalidArgumentException( 'Object must contain `trackingCode` property.' );
+		}
+
+		if ( ! property_exists( $object, 'amount' ) ) {
+			throw new \InvalidArgumentException( 'Object must contain `amount` property.' );
+		}
+
+		if ( ! property_exists( $object, 'currencyCode' ) ) {
+			throw new \InvalidArgumentException( 'Object must contain `currencyCode` property.' );
+		}
+
 		return new self( $object->action, $object->id, $object->trackingCode, $object->amount, $object->currencyCode );
 	}
 }

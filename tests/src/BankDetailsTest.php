@@ -24,8 +24,9 @@ class BankDetailsTest extends \WP_UnitTestCase {
 	public function test() {
 		$bank_details = new BankDetails();
 
-		$bank_details->issuer_id = IssuerIdIDeal::ABN_AMRO;
+		$bank_details->set_issuer_id( IssuerIdIDeal::ABN_AMRO );
 
-		$this->assertEquals( IssuerIdIDeal::ABN_AMRO, $bank_details->issuer_id );
+		$this->assertEquals( IssuerIdIDeal::ABN_AMRO, $bank_details->get_issuer_id() );
+		$this->assertEquals( '{"issuerId":"10"}', \wp_json_encode( $bank_details ) );
 	}
 }

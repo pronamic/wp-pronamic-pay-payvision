@@ -10,6 +10,8 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\Payvision;
 
+use Pronamic\WordPress\Pay\Core\PaymentMethods;
+
 /**
  * Brand ID Test
  *
@@ -23,5 +25,34 @@ class BrandIdTest extends \WP_UnitTestCase {
 	 */
 	public function test() {
 		$this->assertEquals( '1010', BrandId::VISA );
+	}
+
+	/**
+	 * Test from core.
+	 *
+	 * @param string $method   Method.
+	 * @param string $expected Expected value.
+	 *
+	 * @dataProvider provider_test_from_core
+	 */
+	public function test_from_core( $method, $expected ) {
+		$brand_id = BrandId::from_core( $method );
+
+		$this->assertEquals( $expected, $brand_id );
+	}
+
+	/**
+	 * Status data provider.
+	 *
+	 * @return array
+	 */
+	public function provider_test_from_core() {
+		return array(
+			array( PaymentMethods::AFTERPAY, BrandId::AFTERPAY ),
+			array( PaymentMethods::IDEAL, BrandId::IDEAL ),
+			array( PaymentMethods::PAYPAL, BrandId::PAYPAL ),
+			array( PaymentMethods::MAESTRO, BrandId::MAESTRO ),
+			array( 'unknown method', null ),
+		);
 	}
 }

@@ -20,13 +20,13 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
  * @version 1.1.1
  * @since   1.0.0
  */
-class Config extends GatewayConfig {
+class Config extends GatewayConfig implements \JsonSerializable {
 	/**
 	 * Business Id.
 	 *
 	 * @var string
 	 */
-	public $business_id;
+	private $business_id;
 
 	/**
 	 * User.
@@ -47,7 +47,7 @@ class Config extends GatewayConfig {
 	 *
 	 * @var string
 	 */
-	public $store_id;
+	private $store_id;
 
 	/**
 	 * Construct config object.
@@ -62,5 +62,37 @@ class Config extends GatewayConfig {
 		$this->username    = $username;
 		$this->password    = $password;
 		$this->store_id    = $store_id;
+	}
+
+	/**
+	 * Get business ID.
+	 *
+	 * @return string
+	 */
+	public function get_business_id() {
+		return $this->business_id;
+	}
+
+	/**
+	 * Get store ID.
+	 *
+	 * @return string
+	 */
+	public function get_store_id() {
+		return $this->store_id;
+	}
+
+	/**
+	 * JSON serialize.
+	 *
+	 * @return object
+	 */
+	public function jsonSerialize() {
+		return (object) array(
+			'business_id' => $this->business_id,
+			'username'    => $this->username,
+			'password'    => $this->password,
+			'store_id'    => $this->store_id,
+		);
 	}
 }

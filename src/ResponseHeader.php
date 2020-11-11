@@ -26,13 +26,6 @@ class ResponseHeader {
 	private $request_timestamp;
 
 	/**
-	 * An internally-generated tracking code.
-	 *
-	 * @var string|null
-	 */
-	public $request_code;
-
-	/**
 	 * Construct and initialize request header.
 	 *
 	 * @param string $timestamp Request timestamp.
@@ -49,11 +42,11 @@ class ResponseHeader {
 	 * @return self
 	 */
 	public static function from_json( $object ) {
-		$header = new self( $object->requestTimestamp );
-
-		if ( \property_exists( $object, 'requestCode' ) ) {
-			$header->request_code = $object->requestCode;
+		if ( ! property_exists( $object, 'requestTimestamp' ) ) {
+			throw new \InvalidArgumentException( 'Object must contain `requestTimestamp` property.' );
 		}
+
+		$header = new self( $object->requestTimestamp );
 
 		return $header;
 	}

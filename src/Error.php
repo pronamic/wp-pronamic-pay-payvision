@@ -48,6 +48,18 @@ class Error extends \Exception {
 	 * @return self
 	 */
 	public static function from_json( $object ) {
+		if ( ! property_exists( $object, 'code' ) ) {
+			throw new \InvalidArgumentException( 'Object must contain `code` property.' );
+		}
+
+		if ( ! property_exists( $object, 'message' ) ) {
+			throw new \InvalidArgumentException( 'Object must contain `message` property.' );
+		}
+
+		if ( ! property_exists( $object, 'detailedMessage' ) ) {
+			throw new \InvalidArgumentException( 'Object must contain `detailedMessage` property.' );
+		}
+
 		return new self( $object->code, $object->message, $object->detailedMessage );
 	}
 }

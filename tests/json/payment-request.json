@@ -1,0 +1,17 @@
+{
+    "action": "payment",
+    "header": {
+        "businessId": "123456"
+    },
+    "body": {
+        "transaction": {
+            "storeId": "1",
+            "amount": 50,
+            "currencyCode": "EUR",
+            "trackingCode": "12345678"
+        },
+        "bank": {
+            "issuerId": "10"
+        }
+    }
+}

@@ -21,9 +21,28 @@ class BankDetails implements \JsonSerializable {
 	/**
 	 * Issuer ID.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
-	public $issuer_id;
+	private $issuer_id;
+
+	/**
+	 * Get issuer ID.
+	 *
+	 * @return string|null
+	 */
+	public function get_issuer_id() {
+		return $this->issuer_id;
+	}
+
+	/**
+	 * Set issuer ID.
+	 *
+	 * @param string|null $issuer_id Issuer ID.
+	 * @return void
+	 */
+	public function set_issuer_id( $issuer_id ) {
+		$this->issuer_id = $issuer_id;
+	}
 
 	/**
 	 * JSON serialize.

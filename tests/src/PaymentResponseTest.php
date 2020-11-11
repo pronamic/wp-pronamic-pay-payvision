@@ -28,5 +28,16 @@ class PaymentResponseTest extends \WP_UnitTestCase {
 
 		$this->assertInstanceOf( ResponseHeader::class, $response_header );
 		$this->assertInstanceOf( PaymentResponse::class, $payment_response );
+		$this->assertEquals( ResultCode::PENDING, $payment_response->get_result() );
+	}
+
+	public function test_from_json() {
+		$json = file_get_contents( __DIR__ . '/../json/payment-response.json', true );
+
+		$data = json_decode( $json );
+
+		$payment_response = PaymentResponse::from_json( $data );
+
+		$this->assertEquals( ResultCode::PENDING, $payment_response->get_result() );
 	}
 }

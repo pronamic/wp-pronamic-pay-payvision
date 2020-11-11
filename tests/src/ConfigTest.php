@@ -25,5 +25,8 @@ class ConfigTest extends \WP_UnitTestCase {
 		$config = new Config( '123456', 'Test', '●●●●●●●●', '1' );
 
 		$this->assertInstanceOf( Config::class, $config );
+		$this->assertEquals( '123456', $config->get_business_id() );
+		$this->assertEquals( '1', $config->get_store_id() );
+		$this->assertEquals( '{"business_id":"123456","username":"Test","password":"\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf","store_id":"1"}', \wp_json_encode( $config ) );
 	}
 }

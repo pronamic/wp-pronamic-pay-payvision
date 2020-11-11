@@ -28,7 +28,7 @@ class Transaction implements \JsonSerializable {
 	/**
 	 * Amount.
 	 *
-	 * @var string
+	 * @var string|float
 	 */
 	private $amount;
 
@@ -42,7 +42,7 @@ class Transaction implements \JsonSerializable {
 	/**
 	 * Tracking code.
 	 *
-	 * @var string
+	 * @var TrackingCode
 	 */
 	private $tracking_code;
 
@@ -53,38 +53,29 @@ class Transaction implements \JsonSerializable {
 	 *
 	 * @var string|null
 	 */
-	public $brand_id;
-
-	/**
-	 * Language code.
-	 *
-	 * Language code (ISO 639-1) for language to be used for customer UI for alternative payment brands. Only supported by some payment brands. Languages supported depends on the brand.
-	 *
-	 * @var string|null
-	 */
-	public $language_code;
+	private $brand_id;
 
 	/**
 	 * Purchase ID.
 	 *
 	 * @var string|null
 	 */
-	public $purchase_id;
+	private $purchase_id;
 
 	/**
 	 * Return URL.
 	 *
 	 * @var string|null
 	 */
-	public $return_url;
+	private $return_url;
 
 	/**
 	 * Construct and initialize request header.
 	 *
-	 * @param string $store_id      Store ID.
-	 * @param string $amount        Amount.
-	 * @param string $currency_code Currency code.
-	 * @param string $tracking_code Tracking code.
+	 * @param string       $store_id      Store ID.
+	 * @param string|float $amount        Amount.
+	 * @param string       $currency_code Currency code.
+	 * @param TrackingCode $tracking_code Tracking code.
 	 */
 	public function __construct( $store_id, $amount, $currency_code, $tracking_code ) {
 		$this->store_id      = $store_id;
@@ -94,20 +85,69 @@ class Transaction implements \JsonSerializable {
 	}
 
 	/**
+	 * Get brand ID.
+	 *
+	 * @return string|null
+	 */
+	public function get_brand_id() {
+		return $this->brand_id;
+	}
+
+	/**
+	 * Set brand ID.
+	 *
+	 * @param string|null $brand_id Brand ID.
+	 * @return void
+	 */
+	public function set_brand_id( $brand_id ) {
+		$this->brand_id = $brand_id;
+	}
+
+	/**
+	 * Set purchase ID.
+	 *
+	 * @param string|null $purchase_id Purchase ID.
+	 * @return void
+	 */
+	public function set_purchase_id( $purchase_id ) {
+		$this->purchase_id = $purchase_id;
+	}
+
+	/**
+	 * Set return URL.
+	 *
+	 * @param string|null $return_url Return URL.
+	 * @return void
+	 */
+	public function set_return_url( $return_url ) {
+		$this->return_url = $return_url;
+	}
+
+	/**
 	 * JSON serialize.
 	 *
 	 * @return object
 	 */
 	public function jsonSerialize() {
-		return (object) array(
+		$data = array(
 			'storeId'      => $this->store_id,
 			'amount'       => $this->amount,
 			'currencyCode' => $this->currency_code,
 			'trackingCode' => $this->tracking_code,
-			'brandId'      => $this->brand_id,
-			'languageCode' => $this->language_code,
-			'purchaseId'   => $this->purchase_id,
-			'returnUrl'    => $this->return_url,
 		);
+
+		if ( null !== $this->brand_id ) {
+			$data['brandId'] = $this->brand_id;
+		}
+
+		if ( null !== $this->purchase_id ) {
+			$data['purchaseId'] = $this->purchase_id;
+		}
+
+		if ( null !== $this->return_url ) {
+			$data['returnUrl'] = $this->return_url;
+		}
+
+		return (object) $data;
 	}
 }

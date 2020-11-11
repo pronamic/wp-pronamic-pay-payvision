@@ -35,18 +35,9 @@ class PaymentRequest implements \JsonSerializable {
 	/**
 	 * Bank.
 	 *
-	 * @var BankDetails
+	 * @var BankDetails|null
 	 */
-	public $bank;
-
-	/**
-	 * Customer.
-	 *
-	 * Customer specific data. Needed for some alternative payment methods and fraud checks.
-	 *
-	 * @var Customer
-	 */
-	public $customer;
+	private $bank;
 
 	/**
 	 * Construct and initialize payment request
@@ -54,11 +45,26 @@ class PaymentRequest implements \JsonSerializable {
 	 * @param RequestHeader $header      Header.
 	 * @param Transaction   $transaction Transaction.
 	 */
-	public function __construct( $header, $transaction ) {
+	public function __construct( RequestHeader $header, Transaction $transaction ) {
 		$this->header      = $header;
 		$this->transaction = $transaction;
 	}
 
+	/**
+	 * Set bank.
+	 *
+	 * @param BankDetails $bank Bank.
+	 * @return void
+	 */
+	public function set_bank( BankDetails $bank = null ) {
+		$this->bank = $bank;
+	}
+
+	/**
+	 * JSON serialize.
+	 *
+	 * @return object
+	 */
 	public function jsonSerialize() {
 		return (object) array(
 			'action' => 'payment',
@@ -66,7 +72,6 @@ class PaymentRequest implements \JsonSerializable {
 			'body'   => (object) array(
 				'transaction' => $this->transaction,
 				'bank'        => $this->bank,
-				'customer'    => $this->customer,
 			),
 		);
 	}

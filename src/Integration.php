@@ -53,43 +53,6 @@ class Integration extends AbstractGatewayIntegration {
 		);
 
 		parent::__construct( $args );
-
-		// Dependencies.
-		$dependencies = $this->get_dependencies();
-
-		$dependencies->add( new PhpExtensionDependency( 'intl' ) );
-	}
-
-	/**
-	 * Setup gateway integration.
-	 *
-	 * @return void
-	 */
-	public function setup() {
-		// Check if dependencies are met and integration is active.
-		if ( ! $this->is_active() ) {
-			return;
-		}
-	}
-
-	/**
-	 * Input text.
-	 *
-	 * @param array<string,string> $args Arguments.
-	 * @return void
-	 */
-	public static function input_element( $args ) {
-		$name = $args['label_for'];
-
-		$value = get_option( $name );
-		$value = strval( $value );
-
-		printf(
-			'<input name="%s" id="%s" value="%s" type="text" class="regular-text" />',
-			esc_attr( $name ),
-			esc_attr( $name ),
-			esc_attr( $value )
-		);
 	}
 
 	/**
@@ -105,10 +68,10 @@ class Integration extends AbstractGatewayIntegration {
 			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
 			'meta_key' => '_pronamic_gateway_payvision_business_id',
-			'title'    => _x( 'Business Id', 'payvision', 'pronamic_ideal' ),
+			'title'    => \_x( 'Business Id', 'payvision', 'pronamic_ideal' ),
 			'type'     => 'text',
 			'classes'  => array( 'regular-text', 'code' ),
-			'tooltip'  => __( 'A Merchant connecting to the platform is identified by its Business ID (“businessId”).', 'pronamic_ideal' ),
+			'tooltip'  => \__( 'A Merchant connecting to the platform is identified by its Business ID (“businessId”).', 'pronamic_ideal' ),
 		);
 
 		// User.
@@ -116,7 +79,7 @@ class Integration extends AbstractGatewayIntegration {
 			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
 			'meta_key' => '_pronamic_gateway_payvision_username',
-			'title'    => _x( 'User', 'payvision', 'pronamic_ideal' ),
+			'title'    => \_x( 'User', 'payvision', 'pronamic_ideal' ),
 			'type'     => 'text',
 			'classes'  => array( 'regular-text', 'code' ),
 		);
@@ -126,7 +89,7 @@ class Integration extends AbstractGatewayIntegration {
 			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
 			'meta_key' => '_pronamic_gateway_payvision_password',
-			'title'    => _x( 'Password', 'payvision', 'pronamic_ideal' ),
+			'title'    => \_x( 'Password', 'payvision', 'pronamic_ideal' ),
 			'type'     => 'text',
 			'classes'  => array( 'regular-text', 'code' ),
 		);
@@ -136,7 +99,7 @@ class Integration extends AbstractGatewayIntegration {
 			'section'  => 'general',
 			'filter'   => FILTER_SANITIZE_STRING,
 			'meta_key' => '_pronamic_gateway_payvision_store_id',
-			'title'    => _x( 'Store ID', 'payvision', 'pronamic_ideal' ),
+			'title'    => \_x( 'Store ID', 'payvision', 'pronamic_ideal' ),
 			'type'     => 'text',
 			'classes'  => array( 'regular-text', 'code' ),
 		);

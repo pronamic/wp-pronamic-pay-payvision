@@ -28,6 +28,18 @@ class PaymentRequestTest extends \WP_UnitTestCase {
 
 		$payment_request = new PaymentRequest( $header, $transaction );
 
+		$bank = new BankDetails();
+		$bank->set_issuer_id( IssuerIdIDeal::ABN_AMRO );
+
+		$payment_request->set_bank( $bank );
+
 		$this->assertInstanceOf( PaymentRequest::class, $payment_request );
+
+		// JSON.
+		$json_file = __DIR__ . '/../json/payment-request.json';
+
+		$json_string = wp_json_encode( $payment_request, JSON_PRETTY_PRINT );
+
+		$this->assertJsonStringEqualsJsonFile( $json_file, $json_string );
 	}
 }

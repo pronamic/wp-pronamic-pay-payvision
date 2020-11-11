@@ -1,0 +1,26 @@
+{
+  "result": 2,
+  "description": "Pending",
+  "header": {
+    "requestTimestamp": "2020-11-10T18:31:20Z"
+  },
+  "body": {
+    "bank": {
+      "name": "RABOBANK",
+      "countryCode": "NL"
+    },
+    "redirect": {
+      "method": "GET",
+      "url": "https://test.acaptureservices.com/connectors/demo/ideal/simulator/paymentSimulation.ftl;jsessionid=704C6678E87967698FF517985A589BD4.uat01-vm-con04"
+    },
+    "transaction": {
+      "descriptor": "5770.4680.8573 ACEHUB DP IDEAL ",
+      "amount": 1,
+      "currencyCode": "EUR",
+      "action": "payment",
+      "id": "3d40de42-d70f-49e9-8219-a999247945be",
+      "trackingCode": "0948143a-3f04-4627-94a7-e807fc1949fb",
+      "brandId": 3010
+    }
+  }
+}

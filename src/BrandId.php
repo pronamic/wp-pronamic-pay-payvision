@@ -73,21 +73,17 @@ class BrandId {
 	/**
 	 * From core.
 	 *
-	 * @param string $method Method.
+	 * @param string|null $method Method.
 	 * @return string|null
 	 */
 	public static function from_core( $method ) {
 		switch ( $method ) {
 			case PaymentMethods::AFTERPAY:
 				return self::AFTERPAY;
-			case PaymentMethods::BANCONTACT:
-				return self::BCMC;
 			case PaymentMethods::IDEAL:
 				return self::IDEAL;
 			case PaymentMethods::PAYPAL:
 				return self::PAYPAL;
-			case PaymentMethods::AFTERPAY:
-				return self::AFTERPAY;
 			case PaymentMethods::MAESTRO:
 				return self::MAESTRO;
 			default:
