@@ -188,11 +188,17 @@ class Gateway extends Core_Gateway {
 		$response = PaymentResponse::from_json( $object );
 
 		// Update payment status.
-		switch ( $response->get_result() ) {
-			case ResultCode::OK:
-				$payment->set_status( PaymentStatus::SUCCESS );
+		$result_code = $response->get_result();
 
-				break;
+		$status = ResultCode::transform( $result_code );
+
+		if ( null !== $status ) {
+			$payment->set_status( $status );
+		}
+
+		// Add error as note.
+		if ( null !== $response->error ) {
+			$payment->add_note( sprintf( '%s: %s', $response->error->get_code(), $response->error->get_message() ) );
 		}
 	}
 }

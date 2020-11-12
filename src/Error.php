@@ -34,11 +34,30 @@ class Error extends \Exception {
 	 * @param int    $code             Code.
 	 * @param string $message          Message.
 	 * @param string $detailed_message Detailed message.
+	 * @return void
 	 */
 	public function __construct( $code, $message, $detailed_message ) {
 		parent::__construct( $message, $code );
 
 		$this->detailed_message = $detailed_message;
+	}
+
+	/**
+	 * Get code.
+	 *
+	 * @return int|string
+	 */
+	public function get_code() {
+		return $this->getCode();
+	}
+
+	/**
+	 * Get message.
+	 *
+	 * @return string
+	 */
+	public function get_message() {
+		return $this->getMessage();
 	}
 
 	/**

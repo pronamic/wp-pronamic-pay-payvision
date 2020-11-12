@@ -154,7 +154,7 @@ class Client {
 
 		// Error.
 		if ( \property_exists( $data, 'body' ) ) {
-			if ( isset( $data->body->error ) ) {
+			if ( isset( $data->body->error ) && ! \property_exists( $data, 'result' ) ) {
 				$error = Error::from_json( $data->body->error );
 
 				throw $error;
