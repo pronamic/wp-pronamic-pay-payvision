@@ -110,12 +110,13 @@ class Integration extends AbstractGatewayIntegration {
 	 * @return Config
 	 */
 	public function get_config( $post_id ) {
+		$mode        = $this->get_meta( $post_id, 'mode' );
 		$business_id = $this->get_meta( $post_id, 'payvision_business_id' );
 		$username    = $this->get_meta( $post_id, 'payvision_username' );
 		$password    = $this->get_meta( $post_id, 'payvision_password' );
 		$store_id    = $this->get_meta( $post_id, 'payvision_store_id' );
 
-		$config = new Config( $business_id, $username, $password, $store_id );
+		$config = new Config( $mode, $business_id, $username, $password, $store_id );
 
 		return $config;
 	}

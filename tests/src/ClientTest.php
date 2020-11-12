@@ -22,7 +22,7 @@ class ClientTest extends \WP_UnitTestCase {
 	 * Test.
 	 */
 	public function test() {
-		$config = new Config( '123456', 'Test', '●●●●●●●●', '1' );
+		$config = new Config( Gateway::MODE_TEST, '123456', 'Test', '●●●●●●●●', '1' );
 
 		$client = new Client( $config );
 

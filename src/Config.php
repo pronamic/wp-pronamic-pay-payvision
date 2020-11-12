@@ -51,12 +51,14 @@ class Config extends GatewayConfig implements \JsonSerializable {
 	/**
 	 * Construct config object.
 	 *
+	 * @param string $mode        Mode.
 	 * @param string $business_id Business Id.
 	 * @param string $username    Username.
 	 * @param string $password    Password.
 	 * @param string $store_id    Store ID.
 	 */
-	public function __construct( $business_id, $username, $password, $store_id ) {
+	public function __construct( $mode, $business_id, $username, $password, $store_id ) {
+		$this->mode        = $mode;
 		$this->business_id = $business_id;
 		$this->username    = $username;
 		$this->password    = $password;
@@ -88,6 +90,7 @@ class Config extends GatewayConfig implements \JsonSerializable {
 	 */
 	public function jsonSerialize() {
 		return (object) array(
+			'mode'        => $this->mode,
 			'business_id' => $this->business_id,
 			'username'    => $this->username,
 			'password'    => $this->password,

@@ -49,6 +49,7 @@ class IntegrationTest extends \WP_UnitTestCase {
 	public function test_config_post() {
 		$post_id = $this->factory->post->create();
 
+		\update_post_meta( $post_id, '_pronamic_gateway_mode', Gateway::MODE_TEST );
 		\update_post_meta( $post_id, '_pronamic_gateway_payvision_business_id', '123456' );
 		\update_post_meta( $post_id, '_pronamic_gateway_payvision_username', 'Test' );
 		\update_post_meta( $post_id, '_pronamic_gateway_payvision_password', '●●●●●●●●' );
@@ -59,7 +60,7 @@ class IntegrationTest extends \WP_UnitTestCase {
 		$this->assertInstanceOf( Config::class, $config );
 		$this->assertEquals( '123456', $config->get_business_id() );
 		$this->assertEquals( '1', $config->get_store_id() );
-		$this->assertEquals( '{"business_id":"123456","username":"Test","password":"\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf","store_id":"1"}', \wp_json_encode( $config ) );
+		$this->assertEquals( '{"mode":"test","business_id":"123456","username":"Test","password":"\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf","store_id":"1"}', \wp_json_encode( $config ) );
 
 		$gateway = $this->integration->get_gateway( $post_id );
 
