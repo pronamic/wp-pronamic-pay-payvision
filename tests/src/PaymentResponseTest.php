@@ -31,6 +31,9 @@ class PaymentResponseTest extends \WP_UnitTestCase {
 		$this->assertEquals( ResultCode::PENDING, $payment_response->get_result() );
 	}
 
+	/**
+	 * Test from JSON.
+	 */
 	public function test_from_json() {
 		$json = file_get_contents( __DIR__ . '/../json/payment-response.json', true );
 

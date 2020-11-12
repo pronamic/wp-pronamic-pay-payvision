@@ -76,8 +76,9 @@ class TransactionResponse {
 	 * From JSON.
 	 *
 	 * @link https://github.com/WordPress/wp-notify/blob/develop/includes/JsonUnserializable.php
-	 * @param object $object
+	 * @param object $object Object.
 	 * @return self
+	 * @throws \InvalidArgumentException Throws exception when required properties are not set.
 	 */
 	public static function from_json( $object ) {
 		if ( ! property_exists( $object, 'action' ) ) {
@@ -100,6 +101,7 @@ class TransactionResponse {
 			throw new \InvalidArgumentException( 'Object must contain `currencyCode` property.' );
 		}
 
+		/* phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase */
 		return new self( $object->action, $object->id, $object->trackingCode, $object->amount, $object->currencyCode );
 	}
 }

@@ -31,6 +31,10 @@
 		<exclude name="WordPress.Security.SafeRedirect.wp_redirect_wp_redirect"/>
 	</rule>
 
+	<rule ref="WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode">
+		<exclude-pattern>src/Client.php</exclude-pattern>
+	</rule>
+
 	<rule ref="WordPress.PHP.DiscouragedPHPFunctions.runtime_configuration_putenv">
 		<exclude-pattern>tests/bootstrap.php</exclude-pattern>
 	</rule>

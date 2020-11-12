@@ -1,6 +1,6 @@
 <?php
 /**
- * Web SDK gateway
+ * Gateway
  *
  * @author    Pronamic <info@pronamic.eu>
  * @copyright 2005-2019 Pronamic
@@ -10,16 +10,11 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\Payvision;
 
-use Exception;
-use InvalidArgumentException;
-use Locale;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
-use Pronamic\WordPress\Pay\Core\Util as Core_Util;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Pronamic\WordPress\Pay\Plugin;
-use WP_Error;
 
 /**
  * Gateway
@@ -109,10 +104,10 @@ class Gateway extends Core_Gateway {
 	/**
 	 * Start.
 	 *
-	 * @see Plugin::start()
-	 *
 	 * @param Payment $payment Payment.
 	 * @return void
+	 * @throws \InvalidArgumentException Throws exception if payment ID or currency is empty.
+	 * @see Plugin::start()
 	 */
 	public function start( Payment $payment ) {
 		$header = new RequestHeader( $this->config->get_business_id() );
@@ -144,6 +139,7 @@ class Gateway extends Core_Gateway {
 
 		$payment_request = new PaymentRequest( $header, $transaction );
 
+		// iDEAL.
 		if ( BrandId::IDEAL === $transaction->get_brand_id() ) {
 			$bank = new BankDetails();
 
@@ -155,6 +151,7 @@ class Gateway extends Core_Gateway {
 		$payment->set_meta( 'payvision_business_id', $this->config->get_business_id() );
 		$payment->set_meta( 'payvision_tracking_code', \strval( $tracking_code ) );
 
+		// Create payment.
 		$object = $this->client->send_request( 'POST', 'payments', \wp_json_encode( $payment_request ) );
 
 		$payment_response = PaymentResponse::from_json( $object );
@@ -171,16 +168,6 @@ class Gateway extends Core_Gateway {
 	}
 
 	/**
-	 * Payment redirect.
-	 *
-	 * @param Payment $payment Payment.
-	 * @return void
-	 */
-	public function payment_redirect( Payment $payment ) {
-
-	}
-
-	/**
 	 * Update status of the specified payment.
 	 *
 	 * @param Payment $payment Payment.
@@ -189,12 +176,18 @@ class Gateway extends Core_Gateway {
 	public function update_status( Payment $payment ) {
 		$id = $payment->get_transaction_id();
 
-		$business_id = $payment->get_meta( 'payvision_business_id' );
-
-		$object = $this->client->send_request( 'GET', 'payments/' . $id, array( 'businessId' => $business_id ) );
+		// Get payment.
+		$object = $this->client->send_request(
+			'GET',
+			'payments/' . $id,
+			array(
+				'businessId' => $payment->get_meta( 'payvision_business_id' ),
+			)
+		);
 
 		$response = PaymentResponse::from_json( $object );
 
+		// Update payment status.
 		switch ( $response->get_result() ) {
 			case ResultCode::OK:
 				$payment->set_status( PaymentStatus::SUCCESS );

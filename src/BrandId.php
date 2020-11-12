@@ -64,7 +64,7 @@ class BrandId {
 	const PAYPAL = '4010';
 
 	/**
-	 * Afterpay.
+	 * AfterPay.
 	 *
 	 * @var string
 	 */
@@ -80,6 +80,8 @@ class BrandId {
 		switch ( $method ) {
 			case PaymentMethods::AFTERPAY:
 				return self::AFTERPAY;
+			case PaymentMethods::BANCONTACT:
+				return self::BCMC;
 			case PaymentMethods::IDEAL:
 				return self::IDEAL;
 			case PaymentMethods::PAYPAL:

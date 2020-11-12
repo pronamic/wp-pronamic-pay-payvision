@@ -44,8 +44,9 @@ class Error extends \Exception {
 	/**
 	 * From JSON.
 	 *
-	 * @param object $object
+	 * @param object $object Object.
 	 * @return self
+	 * @throws \InvalidArgumentException Throws exception when required properties are not set.
 	 */
 	public static function from_json( $object ) {
 		if ( ! property_exists( $object, 'code' ) ) {
@@ -60,6 +61,7 @@ class Error extends \Exception {
 			throw new \InvalidArgumentException( 'Object must contain `detailedMessage` property.' );
 		}
 
+		/* phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase */
 		return new self( $object->code, $object->message, $object->detailedMessage );
 	}
 }

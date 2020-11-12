@@ -40,6 +40,6 @@ class TrackingCodeTest extends \WP_UnitTestCase {
 		$this->expectException( \InvalidArgumentException::class );
 		$this->expectExceptionMessage( 'Minimum length: 8 characters.' );
 
-		$tracking_code = new TrackingCode( '1' );
+		new TrackingCode( '1' );
 	}
 }

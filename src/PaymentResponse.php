@@ -27,7 +27,7 @@ class PaymentResponse {
 	private $result;
 
 	/**
-	 * A short description of the result..
+	 * A short description of the result.
 	 *
 	 * @var string
 	 */
@@ -79,8 +79,9 @@ class PaymentResponse {
 	/**
 	 * From JSON.
 	 *
-	 * @param object $object
+	 * @param object $object Object.
 	 * @return self
+	 * @throws \InvalidArgumentException Throws exception when required properties are not set.
 	 */
 	public static function from_json( $object ) {
 		if ( ! property_exists( $object, 'result' ) ) {
