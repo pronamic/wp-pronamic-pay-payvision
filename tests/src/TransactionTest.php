@@ -30,6 +30,8 @@ class TransactionTest extends \WP_UnitTestCase {
 
 		$this->assertInstanceOf( Transaction::class, $transaction );
 
+		$this->assertEquals( BrandId::IDEAL, $transaction->get_brand_id() );
+
 		// JSON.
 		$json_file = __DIR__ . '/../json/transaction-request.json';
 

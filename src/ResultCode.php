@@ -90,29 +90,24 @@ class ResultCode {
 	 */
 	const TIMEOUT = 4;
 
-
 	/**
 	 * Transform Payvision result code to WordPress payment status.
 	 *
 	 * @param int|null $result_code Payvision result code.
 	 * @return string|null WordPress payment status.
 	 */
-	public static function transform( $result_code ) {
+	public static function to_core( $result_code ) {
 		switch ( $result_code ) {
 			case self::CUSTOMER_ERROR:
 				return PaymentStatus::CANCELLED;
-
 			case self::DECLINED:
 			case self::FAILED:
 				return PaymentStatus::FAILURE;
-
 			case self::TIMEOUT:
 				return PaymentStatus::EXPIRED;
-
 			case self::PENDING:
 			case self::WAITING:
 				return PaymentStatus::OPEN;
-
 			case self::OK:
 				return PaymentStatus::SUCCESS;
 		}

@@ -49,6 +49,7 @@ class BrandIdTest extends \WP_UnitTestCase {
 	public function provider_test_from_core() {
 		return array(
 			array( PaymentMethods::AFTERPAY, BrandId::AFTERPAY ),
+			array( PaymentMethods::BANCONTACT, BrandId::BCMC ),
 			array( PaymentMethods::IDEAL, BrandId::IDEAL ),
 			array( PaymentMethods::PAYPAL, BrandId::PAYPAL ),
 			array( PaymentMethods::MAESTRO, BrandId::MAESTRO ),

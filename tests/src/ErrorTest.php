@@ -26,7 +26,9 @@ class ErrorTest extends \WP_UnitTestCase {
 
 		$this->assertInstanceOf( Error::class, $error );
 		$this->assertEquals( 1004, $error->getCode() );
+		$this->assertEquals( 1004, $error->get_code() );
 		$this->assertEquals( 'Property not found in request: body.card.number.', $error->getMessage() );
+		$this->assertEquals( 'Property not found in request: body.card.number.', $error->get_message() );
 	}
 
 	/**

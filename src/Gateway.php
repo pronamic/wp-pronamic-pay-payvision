@@ -190,7 +190,7 @@ class Gateway extends Core_Gateway {
 		// Update payment status.
 		$result_code = $response->get_result();
 
-		$status = ResultCode::transform( $result_code );
+		$status = ResultCode::to_core( $result_code );
 
 		if ( null !== $status ) {
 			$payment->set_status( $status );

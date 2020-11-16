@@ -10,6 +10,8 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\Payvision;
 
+use Pronamic\WordPress\Pay\Payments\PaymentStatus;
+
 /**
  * Result Code Test
  *
@@ -23,5 +25,37 @@ class ResultCodeTest extends \WP_UnitTestCase {
 	 */
 	public function test() {
 		$this->assertEquals( 0, ResultCode::OK );
+	}
+
+	/**
+	 * Test to core.
+	 *
+	 * @param string $result_code Result code.
+	 * @param string $expected    Expected value.
+	 *
+	 * @dataProvider provider_test_to_core
+	 */
+	public function test_to_core( $result_code, $expected ) {
+		$payment_status = ResultCode::to_core( $result_code );
+
+		$this->assertEquals( $expected, $payment_status );
+	}
+
+	/**
+	 * Result code data provider.
+	 *
+	 * @return array
+	 */
+	public function provider_test_to_core() {
+		return array(
+			array( ResultCode::CUSTOMER_ERROR, PaymentStatus::CANCELLED ),
+			array( ResultCode::DECLINED, PaymentStatus::FAILURE ),
+			array( ResultCode::FAILED, PaymentStatus::FAILURE ),
+			array( ResultCode::OK, PaymentStatus::SUCCESS ),
+			array( ResultCode::WAITING, PaymentStatus::OPEN ),
+			array( ResultCode::PENDING, PaymentStatus::OPEN ),
+			array( ResultCode::TIMEOUT, PaymentStatus::EXPIRED ),
+			array( -1000, null ),
+		);
 	}
 }
