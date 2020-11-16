@@ -48,14 +48,21 @@ class ResponseHeader {
 		$validator->validate(
 			$object,
 			(object) array(
-				'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/response-header.json' ),
+				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/response-header.json' ),
 			),
 			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
 		);
 
-		/* phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase */
-		$header = new self( $object->requestTimestamp );
+        /* phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase */
+		return new self( $object->requestTimestamp );
+	}
 
-		return $header;
+	/**
+	 * Get request timestamp.
+	 *
+	 * @return string
+	 */
+	public function get_request_timestamp() {
+		return $this->request_timestamp;
 	}
 }

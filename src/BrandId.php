@@ -2,10 +2,10 @@
 /**
  * Brand ID
  *
- * @author    Pronamic <info@pronamic.eu>
+ * @author Pronamic <info@pronamic.eu>
  * @copyright 2005-2020 Pronamic
- * @license   GPL-3.0-or-later
- * @package   Pronamic\WordPress\Pay\Gateways\Payvision
+ * @license GPL-3.0-or-later
+ * @package Pronamic\WordPress\Pay\Gateways\Payvision
  */
 
 namespace Pronamic\WordPress\Pay\Gateways\Payvision;
@@ -15,10 +15,10 @@ use Pronamic\WordPress\Pay\Core\PaymentMethods;
 /**
  * Brand ID
  *
- * @link    https://developers.acehubpaymentservices.com/v3.3/reference#brands
- * @author  Remco Tolsma
+ * @link https://developers.acehubpaymentservices.com/v3.3/reference#brands
+ * @author Remco Tolsma
  * @version 1.0.0
- * @since   1.0.0
+ * @since 1.0.0
  */
 class BrandId {
 	/**
@@ -80,14 +80,19 @@ class BrandId {
 		switch ( $method ) {
 			case PaymentMethods::AFTERPAY:
 				return self::AFTERPAY;
+
 			case PaymentMethods::BANCONTACT:
 				return self::BCMC;
+
 			case PaymentMethods::IDEAL:
 				return self::IDEAL;
+
 			case PaymentMethods::PAYPAL:
 				return self::PAYPAL;
+
 			case PaymentMethods::MAESTRO:
 				return self::MAESTRO;
+
 			default:
 				return null;
 		}

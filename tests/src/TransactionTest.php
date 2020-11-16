@@ -35,7 +35,7 @@ class TransactionTest extends \WP_UnitTestCase {
 		// JSON.
 		$json_file = __DIR__ . '/../json/transaction-request.json';
 
-		$json_string = wp_json_encode( $transaction, JSON_PRETTY_PRINT );
+		$json_string = \wp_json_encode( $transaction, \JSON_PRETTY_PRINT );
 
 		$this->assertJsonStringEqualsJsonFile( $json_file, $json_string );
 	}

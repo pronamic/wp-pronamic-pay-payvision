@@ -19,6 +19,20 @@ namespace Pronamic\WordPress\Pay\Gateways\Payvision;
  */
 class PaymentResponse {
 	/**
+	 * Redirect.
+	 *
+	 * @var RedirectDetails|null
+	 */
+	public $redirect;
+
+	/**
+	 * Transaction.
+	 *
+	 * @var TransactionResponse|null
+	 */
+	public $transaction;
+
+	/**
 	 * The result of the payment.
 	 *
 	 * @link https://developers.acehubpaymentservices.com/v3.3/reference#result-codes-2
@@ -45,21 +59,8 @@ class PaymentResponse {
 	 *
 	 * @var Error|null
 	 */
-	public $error;
+	private $error;
 
-	/**
-	 * Redirect.
-	 *
-	 * @var RedirectDetails|null
-	 */
-	public $redirect;
-
-	/**
-	 * Transaction.
-	 *
-	 * @var TransactionResponse|null
-	 */
-	public $transaction;
 	/**
 	 * Construct and initialize payment response
 	 *
@@ -71,15 +72,6 @@ class PaymentResponse {
 		$this->result      = $result;
 		$this->description = $description;
 		$this->header      = $header;
-	}
-
-	/**
-	 * Get result.
-	 *
-	 * @return int
-	 */
-	public function get_result() {
-		return $this->result;
 	}
 
 	/**
@@ -95,25 +87,71 @@ class PaymentResponse {
 		$validator->validate(
 			$object,
 			(object) array(
-				'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/payment-response.json' ),
+				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/payment-response.json' ),
 			),
 			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
 		);
 
 		$response = new self( $object->result, $object->description, ResponseHeader::from_json( $object->header ) );
 
-		if ( property_exists( $object->body, 'transaction' ) ) {
+		if ( \property_exists( $object->body, 'transaction' ) ) {
 			$response->transaction = TransactionResponse::from_json( $object->body->transaction );
 		}
 
-		if ( property_exists( $object->body, 'redirect' ) ) {
+		if ( \property_exists( $object->body, 'redirect' ) ) {
 			$response->redirect = RedirectDetails::from_json( $object->body->redirect );
 		}
 
-		if ( property_exists( $object->body, 'error' ) ) {
-			$response->error = Error::from_json( $object->body->error );
+		if ( \property_exists( $object->body, 'error' ) ) {
+			$response->set_error( Error::from_json( $object->body->error ) );
 		}
 
 		return $response;
+	}
+
+	/**
+	 * Get result.
+	 *
+	 * @return int
+	 */
+	public function get_result() {
+		return $this->result;
+	}
+
+	/**
+	 * Get description.
+	 *
+	 * @return string
+	 */
+	public function get_description() {
+		return $this->description;
+	}
+
+	/**
+	 * Get header.
+	 *
+	 * @return ResponseHeader
+	 */
+	public function get_header() {
+		return $this->header;
+	}
+
+	/**
+	 * Get error.
+	 *
+	 * @return Error|null
+	 */
+	public function get_error() {
+		return $this->error;
+	}
+
+	/**
+	 * Set error.
+	 *
+	 * @param Error|null $error Error.
+	 * @return void
+	 */
+	public function set_error( Error $error = null ) {
+		$this->error = $error;
 	}
 }

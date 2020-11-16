@@ -2,10 +2,10 @@
 /**
  * Gateway
  *
- * @author    Pronamic <info@pronamic.eu>
+ * @author Pronamic <info@pronamic.eu>
  * @copyright 2005-2019 Pronamic
- * @license   GPL-3.0-or-later
- * @package   Pronamic\WordPress\Pay\Gateways\Payvision
+ * @license GPL-3.0-or-later
+ * @package Pronamic\WordPress\Pay\Gateways\Payvision
  */
 
 namespace Pronamic\WordPress\Pay\Gateways\Payvision;
@@ -13,17 +13,14 @@ namespace Pronamic\WordPress\Pay\Gateways\Payvision;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Payments\Payment;
-use Pronamic\WordPress\Pay\Payments\PaymentStatus;
-use Pronamic\WordPress\Pay\Plugin;
 
 /**
  * Gateway
  *
  * @link https://github.com/payvisionpayments/php/blob/master/generatepaymentform.php
- *
- * @author  Remco Tolsma
+ * @author Remco Tolsma
  * @version 1.0.0
- * @since   1.0.0
+ * @since 1.0.0
  */
 class Gateway extends Core_Gateway {
 	/**
@@ -62,18 +59,18 @@ class Gateway extends Core_Gateway {
 		return array(
 			array(
 				'options' => array(
-					IssuerIdIDeal::ABN_AMRO              => __( 'ABN Amro', 'pronamic_ideal' ),
-					IssuerIdIDeal::RABOBANK              => __( 'Rabobank', 'pronamic_ideal' ),
-					IssuerIdIDeal::ING                   => __( 'ING', 'pronamic_ideal' ),
-					IssuerIdIDeal::SNS                   => __( 'SNS Bank', 'pronamic_ideal' ),
-					IssuerIdIDeal::ASN                   => __( 'ASN Bank', 'pronamic_ideal' ),
-					IssuerIdIDeal::REGIOBANK             => __( 'RegioBank', 'pronamic_ideal' ),
-					IssuerIdIDeal::TRIODOS               => __( 'Triodos Bank', 'pronamic_ideal' ),
-					IssuerIdIDeal::KNAB                  => __( 'Knab', 'pronamic_ideal' ),
-					IssuerIdIDeal::VAN_LANSCHOT_BANKIERS => __( 'Van Lanschot Bankiers', 'pronamic_ideal' ),
-					IssuerIdIDeal::BUNQ                  => __( 'Bunq', 'pronamic_ideal' ),
-					IssuerIdIDeal::MONEYOU               => __( 'Moneyou', 'pronamic_ideal' ),
-					IssuerIdIDeal::HANDELSBANKEN         => __( 'Handelsbanken', 'pronamic_ideal' ),
+					IssuerIdIDeal::ABN_AMRO              => \__( 'ABN Amro', 'pronamic_ideal' ),
+					IssuerIdIDeal::RABOBANK              => \__( 'Rabobank', 'pronamic_ideal' ),
+					IssuerIdIDeal::ING                   => \__( 'ING', 'pronamic_ideal' ),
+					IssuerIdIDeal::SNS                   => \__( 'SNS Bank', 'pronamic_ideal' ),
+					IssuerIdIDeal::ASN                   => \__( 'ASN Bank', 'pronamic_ideal' ),
+					IssuerIdIDeal::REGIOBANK             => \__( 'RegioBank', 'pronamic_ideal' ),
+					IssuerIdIDeal::TRIODOS               => \__( 'Triodos Bank', 'pronamic_ideal' ),
+					IssuerIdIDeal::KNAB                  => \__( 'Knab', 'pronamic_ideal' ),
+					IssuerIdIDeal::VAN_LANSCHOT_BANKIERS => \__( 'Van Lanschot Bankiers', 'pronamic_ideal' ),
+					IssuerIdIDeal::BUNQ                  => \__( 'Bunq', 'pronamic_ideal' ),
+					IssuerIdIDeal::MONEYOU               => \__( 'Moneyou', 'pronamic_ideal' ),
+					IssuerIdIDeal::HANDELSBANKEN         => \__( 'Handelsbanken', 'pronamic_ideal' ),
 				),
 			),
 		);
@@ -83,7 +80,6 @@ class Gateway extends Core_Gateway {
 	 * Get supported payment methods
 	 *
 	 * @see Core_Gateway::get_supported_payment_methods()
-	 *
 	 * @return array<string>
 	 */
 	public function get_supported_payment_methods() {
@@ -96,6 +92,7 @@ class Gateway extends Core_Gateway {
 	 * Is payment method required to start transaction?
 	 *
 	 * @see Core_Gateway::payment_method_is_required()
+	 * @return true
 	 */
 	public function payment_method_is_required() {
 		return true;
@@ -156,6 +153,12 @@ class Gateway extends Core_Gateway {
 
 		$payment_response = PaymentResponse::from_json( $object );
 
+		$error = $payment_response->get_error();
+
+		if ( null !== $error ) {
+			throw $error;
+		}
+
 		if ( null !== $payment_response->redirect ) {
 			if ( null !== $payment_response->redirect->url ) {
 				$payment->set_action_url( $payment_response->redirect->url );
@@ -197,8 +200,10 @@ class Gateway extends Core_Gateway {
 		}
 
 		// Add error as note.
-		if ( null !== $response->error ) {
-			$payment->add_note( sprintf( '%s: %s', $response->error->get_code(), $response->error->get_message() ) );
+		$error = $response->get_error();
+
+		if ( null !== $error ) {
+			$payment->add_note( \sprintf( '%s: %s', $error->get_code(), $error->get_message() ) );
 		}
 	}
 }

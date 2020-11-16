@@ -46,7 +46,7 @@ class RedirectDetails {
 		$validator->validate(
 			$object,
 			(object) array(
-				'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/redirect.json' ),
+				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/redirect.json' ),
 			),
 			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
 		);

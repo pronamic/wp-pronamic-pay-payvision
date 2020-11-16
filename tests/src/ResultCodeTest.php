@@ -32,7 +32,6 @@ class ResultCodeTest extends \WP_UnitTestCase {
 	 *
 	 * @param string $result_code Result code.
 	 * @param string $expected    Expected value.
-	 *
 	 * @dataProvider provider_test_to_core
 	 */
 	public function test_to_core( $result_code, $expected ) {
@@ -44,7 +43,7 @@ class ResultCodeTest extends \WP_UnitTestCase {
 	/**
 	 * Result code data provider.
 	 *
-	 * @return array
+	 * @return array<int, string|null>
 	 */
 	public function provider_test_to_core() {
 		return array(

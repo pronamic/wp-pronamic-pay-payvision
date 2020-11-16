@@ -32,14 +32,14 @@ class Config extends GatewayConfig implements \JsonSerializable {
 	 *
 	 * @var string
 	 */
-	public $username;
+	private $username;
 
 	/**
 	 * Password.
 	 *
 	 * @var string
 	 */
-	public $password;
+	private $password;
 
 	/**
 	 * Store ID.
@@ -72,6 +72,24 @@ class Config extends GatewayConfig implements \JsonSerializable {
 	 */
 	public function get_business_id() {
 		return $this->business_id;
+	}
+
+	/**
+	 * Get username.
+	 *
+	 * @return string
+	 */
+	public function get_username() {
+		return $this->username;
+	}
+
+	/**
+	 * Get password.
+	 *
+	 * @return string
+	 */
+	public function get_password() {
+		return $this->password;
 	}
 
 	/**

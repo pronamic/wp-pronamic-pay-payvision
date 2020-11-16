@@ -33,7 +33,7 @@ class Integration extends AbstractGatewayIntegration {
 	 * @param array<string, array<string>> $args Arguments.
 	 */
 	public function __construct( $args = array() ) {
-		$args = wp_parse_args(
+		$args = \wp_parse_args(
 			$args,
 			array(
 				'id'            => 'payvision',
@@ -42,7 +42,10 @@ class Integration extends AbstractGatewayIntegration {
 				'url'           => \__( 'https://www.payvision.com/', 'pronamic_ideal' ),
 				'product_url'   => \__( 'https://www.payvision.com/', 'pronamic_ideal' ),
 				'dashboard_url' => 'https://tools.payvisionservices.com/acecontrol/dashboard',
-				'manual_url'    => \__( 'https://www.pronamic.eu/manuals/using-payvision-pronamic-pay/', 'pronamic_ideal' ),
+				'manual_url'    => \__(
+					'https://www.pronamic.eu/manuals/using-payvision-pronamic-pay/',
+					'pronamic_ideal'
+				),
 				'supports'      => array(),
 			)
 		);
@@ -61,18 +64,21 @@ class Integration extends AbstractGatewayIntegration {
 		// Business Id.
 		$fields[] = array(
 			'section'  => 'general',
-			'filter'   => FILTER_SANITIZE_STRING,
+			'filter'   => \FILTER_SANITIZE_STRING,
 			'meta_key' => '_pronamic_gateway_payvision_business_id',
 			'title'    => \_x( 'Business Id', 'payvision', 'pronamic_ideal' ),
 			'type'     => 'text',
 			'classes'  => array( 'regular-text', 'code' ),
-			'tooltip'  => \__( 'A Merchant connecting to the platform is identified by its Business ID (“businessId”).', 'pronamic_ideal' ),
+			'tooltip'  => \__(
+				'A Merchant connecting to the platform is identified by its Business ID (“businessId”).',
+				'pronamic_ideal'
+			),
 		);
 
 		// User.
 		$fields[] = array(
 			'section'  => 'general',
-			'filter'   => FILTER_SANITIZE_STRING,
+			'filter'   => \FILTER_SANITIZE_STRING,
 			'meta_key' => '_pronamic_gateway_payvision_username',
 			'title'    => \_x( 'User', 'payvision', 'pronamic_ideal' ),
 			'type'     => 'text',
@@ -82,7 +88,7 @@ class Integration extends AbstractGatewayIntegration {
 		// Password.
 		$fields[] = array(
 			'section'  => 'general',
-			'filter'   => FILTER_SANITIZE_STRING,
+			'filter'   => \FILTER_SANITIZE_STRING,
 			'meta_key' => '_pronamic_gateway_payvision_password',
 			'title'    => \_x( 'Password', 'payvision', 'pronamic_ideal' ),
 			'type'     => 'text',
@@ -92,7 +98,7 @@ class Integration extends AbstractGatewayIntegration {
 		// Store Id.
 		$fields[] = array(
 			'section'  => 'general',
-			'filter'   => FILTER_SANITIZE_STRING,
+			'filter'   => \FILTER_SANITIZE_STRING,
 			'meta_key' => '_pronamic_gateway_payvision_store_id',
 			'title'    => \_x( 'Store ID', 'payvision', 'pronamic_ideal' ),
 			'type'     => 'text',
@@ -116,9 +122,7 @@ class Integration extends AbstractGatewayIntegration {
 		$password    = $this->get_meta( $post_id, 'payvision_password' );
 		$store_id    = $this->get_meta( $post_id, 'payvision_store_id' );
 
-		$config = new Config( $mode, $business_id, $username, $password, $store_id );
-
-		return $config;
+		return new Config( $mode, $business_id, $username, $password, $store_id );
 	}
 
 	/**

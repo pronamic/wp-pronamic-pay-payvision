@@ -22,7 +22,11 @@ class ErrorTest extends \WP_UnitTestCase {
 	 * Test.
 	 */
 	public function test() {
-		$error = new Error( 1004, 'Property not found in request: body.card.number.', 'Property not found in request: body.card.number.' );
+		$error = new Error(
+			1004,
+			'Property not found in request: body.card.number.',
+			'Property not found in request: body.card.number.'
+		);
 
 		$this->assertInstanceOf( Error::class, $error );
 		$this->assertEquals( 1004, $error->getCode() );
@@ -35,9 +39,9 @@ class ErrorTest extends \WP_UnitTestCase {
 	 * Test from JSON.
 	 */
 	public function test_from_json() {
-		$json = file_get_contents( __DIR__ . '/../json/error.json', true );
+		$json = \file_get_contents( __DIR__ . '/../json/error.json', true );
 
-		$data = json_decode( $json );
+		$data = \json_decode( $json );
 
 		$error = Error::from_json( $data );
 

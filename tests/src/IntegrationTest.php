@@ -60,7 +60,10 @@ class IntegrationTest extends \WP_UnitTestCase {
 		$this->assertInstanceOf( Config::class, $config );
 		$this->assertEquals( '123456', $config->get_business_id() );
 		$this->assertEquals( '1', $config->get_store_id() );
-		$this->assertEquals( '{"mode":"test","business_id":"123456","username":"Test","password":"\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf","store_id":"1"}', \wp_json_encode( $config ) );
+		$this->assertEquals(
+			'{"mode":"test","business_id":"123456","username":"Test","password":"\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf\u25cf","store_id":"1"}',
+			\wp_json_encode( $config )
+		);
 
 		$gateway = $this->integration->get_gateway( $post_id );
 

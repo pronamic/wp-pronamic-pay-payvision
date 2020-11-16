@@ -38,7 +38,7 @@ class PaymentRequestTest extends \WP_UnitTestCase {
 		// JSON.
 		$json_file = __DIR__ . '/../json/payment-request.json';
 
-		$json_string = wp_json_encode( $payment_request, JSON_PRETTY_PRINT );
+		$json_string = \wp_json_encode( $payment_request, \JSON_PRETTY_PRINT );
 
 		$this->assertJsonStringEqualsJsonFile( $json_file, $json_string );
 	}

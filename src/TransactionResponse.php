@@ -19,6 +19,13 @@ namespace Pronamic\WordPress\Pay\Gateways\Payvision;
  */
 class TransactionResponse {
 	/**
+	 * Unique transaction ID given to each transaction.
+	 *
+	 * @var string
+	 */
+	public $id;
+
+	/**
 	 * Action.
 	 *
 	 * Actual action performed. In case a separate capture is NOT possible, the transaction will be interpreted and performed as a payment transaction and cannot be cancelled, but can be refunded and with result=0 considered as a “successful payment".
@@ -26,13 +33,6 @@ class TransactionResponse {
 	 * @var string
 	 */
 	private $action;
-
-	/**
-	 * Unique transaction ID given to each transaction.
-	 *
-	 * @var string
-	 */
-	public $id;
 
 	/**
 	 * Your unique transaction reference.
@@ -86,12 +86,57 @@ class TransactionResponse {
 		$validator->validate(
 			$object,
 			(object) array(
-				'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/transaction-response.json' ),
+				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/transaction-response.json' ),
 			),
 			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
 		);
 
 		/* phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase */
 		return new self( $object->action, $object->id, $object->trackingCode, $object->amount, $object->currencyCode );
+	}
+
+	/**
+	 * Get action.
+	 *
+	 * @return string
+	 */
+	public function get_action() {
+		return $this->action;
+	}
+
+	/**
+	 * Get id.
+	 *
+	 * @return string
+	 */
+	public function get_id() {
+		return $this->id;
+	}
+
+	/**
+	 * Get tracking code.
+	 *
+	 * @return string
+	 */
+	public function get_tracking_code() {
+		return $this->tracking_code;
+	}
+
+	/**
+	 * Get amount.
+	 *
+	 * @return string|float|int
+	 */
+	public function get_amount() {
+		return $this->amount;
+	}
+
+	/**
+	 * Get currency code.
+	 *
+	 * @return string
+	 */
+	public function get_currency_code() {
+		return $this->currency_code;
 	}
 }

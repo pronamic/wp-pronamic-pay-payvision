@@ -26,7 +26,7 @@ class GatewayTest extends \WP_UnitTestCase {
 	/**
 	 * Mock HTTP responses.
 	 *
-	 * @var array
+	 * @var array<string, string>
 	 */
 	private $mock_http_responses;
 
@@ -39,7 +39,7 @@ class GatewayTest extends \WP_UnitTestCase {
 		// Mock HTTP responses.
 		$this->mock_http_responses = array();
 
-		add_filter( 'pre_http_request', array( $this, 'pre_http_request' ), 10, 3 );
+		\add_filter( 'pre_http_request', array( $this, 'pre_http_request' ), 10, 3 );
 	}
 
 	/**
@@ -56,11 +56,10 @@ class GatewayTest extends \WP_UnitTestCase {
 	 * Pre HTTP request
 	 *
 	 * @link https://github.com/WordPress/WordPress/blob/3.9.1/wp-includes/class-http.php#L150-L164
-	 *
-	 * @param false|array|WP_Error $preempt Whether to preempt an HTTP request's return value. Default false.
-	 * @param array                $r       HTTP request arguments.
+	 * @param bool                 $preempt Whether to preempt an HTTP request's return value. Default false.
+	 * @param array<string, mixed> $r       HTTP request arguments.
 	 * @param string               $url     The request URL.
-	 * @return array
+	 * @return array<string, mixed>
 	 */
 	public function pre_http_request( $preempt, $r, $url ) {
 		if ( ! isset( $this->mock_http_responses[ $url ] ) ) {
@@ -71,13 +70,16 @@ class GatewayTest extends \WP_UnitTestCase {
 
 		unset( $this->mock_http_responses[ $url ] );
 
-		$response = file_get_contents( $file, true );
+		$response = \file_get_contents( $file, true );
 
 		$processed_response = \WP_Http::processResponse( $response );
 
 		$processed_headers = \WP_Http::processHeaders( $processed_response['headers'], $url );
 
 		$processed_headers['body'] = $processed_response['body'];
+
+		// The `arguments` key is not an officiale WordPress core key, added for SlevomatCodingStandard compliance.
+		$processed_headers['arguments'] = $r;
 
 		return $processed_headers;
 	}
@@ -112,7 +114,10 @@ class GatewayTest extends \WP_UnitTestCase {
 
 		$gateway = new Gateway( $config );
 
-		$this->mock_http_response( 'https://stagconnect.acehubpaymentservices.com/gateway/v3/payments/00a502ba-d289-4ee1-a43e-3c4e1de76b4d', __DIR__ . '/../http/get-payment-result-0.http' );
+		$this->mock_http_response(
+			'https://stagconnect.acehubpaymentservices.com/gateway/v3/payments/00a502ba-d289-4ee1-a43e-3c4e1de76b4d',
+			__DIR__ . '/../http/get-payment-result-0.http'
+		);
 
 		$payment = new Payment();
 
@@ -131,14 +136,19 @@ class GatewayTest extends \WP_UnitTestCase {
 
 		$gateway = new Gateway( $config );
 
-		$this->mock_http_response( 'https://stagconnect.acehubpaymentservices.com/gateway/v3/payments/00a502ba-d289-4ee1-a43e-3c4e1de76b4e', __DIR__ . '/../http/get-payment-by-fake-id.http' );
+		$this->mock_http_response(
+			'https://stagconnect.acehubpaymentservices.com/gateway/v3/payments/00a502ba-d289-4ee1-a43e-3c4e1de76b4e',
+			__DIR__ . '/../http/get-payment-by-fake-id.http'
+		);
 
 		$payment = new Payment();
 
 		$payment->set_transaction_id( '00a502ba-d289-4ee1-a43e-3c4e1de76b4e' );
 
-		$this->expectException( \Exception::class );
-		$this->expectExceptionMessage( 'Could not JSON decode Payvision response, HTTP response: "404 Not Found", HTTP body length: "2", JSON error: "Syntax error".' );
+		$this->expectException( \Throwable::class );
+		$this->expectExceptionMessage(
+			'Could not JSON decode Payvision response, HTTP response: "404 Not Found", HTTP body length: "2", JSON error: "Syntax error".'
+		);
 
 		$gateway->update_status( $payment );
 	}
@@ -151,13 +161,16 @@ class GatewayTest extends \WP_UnitTestCase {
 
 		$gateway = new Gateway( $config );
 
-		$this->mock_http_response( 'https://stagconnect.acehubpaymentservices.com/gateway/v3/payments/00a502ba-d289-4ee1-a43e-3c4e1de76b4e', __DIR__ . '/../http/get-payment-body-empty.http' );
+		$this->mock_http_response(
+			'https://stagconnect.acehubpaymentservices.com/gateway/v3/payments/00a502ba-d289-4ee1-a43e-3c4e1de76b4e',
+			__DIR__ . '/../http/get-payment-body-empty.http'
+		);
 
 		$payment = new Payment();
 
 		$payment->set_transaction_id( '00a502ba-d289-4ee1-a43e-3c4e1de76b4e' );
 
-		$this->expectException( \Exception::class );
+		$this->expectException( \Throwable::class );
 		$this->expectExceptionMessage( 'Payvision response is empty, HTTP response: "200 OK".' );
 
 		$gateway->update_status( $payment );
@@ -171,14 +184,19 @@ class GatewayTest extends \WP_UnitTestCase {
 
 		$gateway = new Gateway( $config );
 
-		$this->mock_http_response( 'https://stagconnect.acehubpaymentservices.com/gateway/v3/payments/00a502ba-d289-4ee1-a43e-3c4e1de76b4e', __DIR__ . '/../http/get-payment-no-object.http' );
+		$this->mock_http_response(
+			'https://stagconnect.acehubpaymentservices.com/gateway/v3/payments/00a502ba-d289-4ee1-a43e-3c4e1de76b4e',
+			__DIR__ . '/../http/get-payment-no-object.http'
+		);
 
 		$payment = new Payment();
 
 		$payment->set_transaction_id( '00a502ba-d289-4ee1-a43e-3c4e1de76b4e' );
 
-		$this->expectException( \Exception::class );
-		$this->expectExceptionMessage( 'Could not JSON decode Payvision response to an object, HTTP response: "200 OK", HTTP body: "[]".' );
+		$this->expectException( \Throwable::class );
+		$this->expectExceptionMessage(
+			'Could not JSON decode Payvision response to an object, HTTP response: "200 OK", HTTP body: "[]".'
+		);
 
 		$gateway->update_status( $payment );
 	}
@@ -201,7 +219,7 @@ class GatewayTest extends \WP_UnitTestCase {
 
 		$payment->set_transaction_id( '00a502ba-d289-4ee1-a43e-3c4e1de76b4e' );
 
-		$this->expectException( \Exception::class );
+		$this->expectException( \Throwable::class );
 		$this->expectExceptionMessage( 'A valid URL was not provided.' );
 
 		$gateway->update_status( $payment );
@@ -217,7 +235,10 @@ class GatewayTest extends \WP_UnitTestCase {
 
 		$gateway = new Gateway( $config );
 
-		$this->mock_http_response( 'https://stagconnect.acehubpaymentservices.com/gateway/v3/payments', __DIR__ . '/../http/post-payment.http' );
+		$this->mock_http_response(
+			'https://stagconnect.acehubpaymentservices.com/gateway/v3/payments',
+			__DIR__ . '/../http/post-payment.http'
+		);
 
 		$payment = new Payment();
 
@@ -227,7 +248,10 @@ class GatewayTest extends \WP_UnitTestCase {
 
 		$gateway->start( $payment );
 
-		$this->assertEquals( 'https://test.acaptureservices.com/connectors/demo/ideal/simulator/paymentSimulation.ftl;jsessionid=5D94958C082AE32D58841306599361A5.uat01-vm-con02', $payment->get_action_url() );
+		$this->assertEquals(
+			'https://test.acaptureservices.com/connectors/demo/ideal/simulator/paymentSimulation.ftl;jsessionid=5D94958C082AE32D58841306599361A5.uat01-vm-con02',
+			$payment->get_action_url()
+		);
 
 		$this->assertEquals( '0c5b2580-45b9-440b-bef4-1ca016854afd', $payment->get_transaction_id() );
 	}

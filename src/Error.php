@@ -43,6 +43,28 @@ class Error extends \Exception {
 	}
 
 	/**
+	 * From JSON.
+	 *
+	 * @param object $object Object.
+	 * @return self
+	 * @throws \JsonSchema\Exception\ValidationException Throws exception when JSON is not valid.
+	 */
+	public static function from_json( $object ) {
+		$validator = new \JsonSchema\Validator();
+
+		$validator->validate(
+			$object,
+			(object) array(
+				'$ref' => 'file://' . \realpath( __DIR__ . '/../json-schemas/error.json' ),
+			),
+			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
+		);
+
+        /* phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase */
+		return new self( $object->code, $object->message, $object->detailedMessage );
+	}
+
+	/**
 	 * Get code.
 	 *
 	 * @return int|string
@@ -61,24 +83,11 @@ class Error extends \Exception {
 	}
 
 	/**
-	 * From JSON.
+	 * Get detailed message.
 	 *
-	 * @param object $object Object.
-	 * @return self
-	 * @throws \JsonSchema\Exception\ValidationException Throws exception when JSON is not valid.
+	 * @return string
 	 */
-	public static function from_json( $object ) {
-		$validator = new \JsonSchema\Validator();
-
-		$validator->validate(
-			$object,
-			(object) array(
-				'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/error.json' ),
-			),
-			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
-		);
-
-		/* phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase */
-		return new self( $object->code, $object->message, $object->detailedMessage );
+	public function get_detailed_message() {
+		return $this->detailed_message;
 	}
 }

@@ -35,9 +35,9 @@ class PaymentResponseTest extends \WP_UnitTestCase {
 	 * Test from JSON.
 	 */
 	public function test_from_json() {
-		$json = file_get_contents( __DIR__ . '/../json/payment-response.json', true );
+		$json = \file_get_contents( __DIR__ . '/../json/payment-response.json', true );
 
-		$data = json_decode( $json );
+		$data = \json_decode( $json );
 
 		$payment_response = PaymentResponse::from_json( $data );
 

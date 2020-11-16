@@ -10,9 +10,6 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\Payvision;
 
-use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
-use Pronamic\WordPress\Pay\Core\GatewayConfig;
-
 /**
  * Issuer ID iDEAL
  *

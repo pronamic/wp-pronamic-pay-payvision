@@ -32,7 +32,6 @@ class BrandIdTest extends \WP_UnitTestCase {
 	 *
 	 * @param string $method   Method.
 	 * @param string $expected Expected value.
-	 *
 	 * @dataProvider provider_test_from_core
 	 */
 	public function test_from_core( $method, $expected ) {
@@ -44,7 +43,7 @@ class BrandIdTest extends \WP_UnitTestCase {
 	/**
 	 * Status data provider.
 	 *
-	 * @return array
+	 * @return array<string, string|null>
 	 */
 	public function provider_test_from_core() {
 		return array(

@@ -2,10 +2,10 @@
 /**
  * Payvision client
  *
- * @author    Pronamic <info@pronamic.eu>
+ * @author Pronamic <info@pronamic.eu>
  * @copyright 2005-2020 Pronamic
- * @license   GPL-3.0-or-later
- * @package   Pronamic\WordPress\Pay\Gateways\Payvision
+ * @license GPL-3.0-or-later
+ * @package Pronamic\WordPress\Pay\Gateways\Payvision
  */
 
 namespace Pronamic\WordPress\Pay\Gateways\Payvision;
@@ -14,10 +14,9 @@ namespace Pronamic\WordPress\Pay\Gateways\Payvision;
  * Payvision client
  *
  * @link https://github.com/payvisionpayments/php/blob/master/generatepaymentform.php
- *
- * @author  Remco Tolsma
+ * @author Remco Tolsma
  * @version 1.0.5
- * @since   1.0.0
+ * @since 1.0.0
  */
 class Client {
 	/**
@@ -47,12 +46,14 @@ class Client {
 	 */
 	public function send_request( $method, $path, $request = null ) {
 		// Request.
+		$authorization = 'Basic ' . \base64_encode( $this->config->get_username() . ':' . $this->config->get_password() );
+
 		$response = \wp_remote_request(
 			$this->config->get_endpoint_url( $path ),
 			array(
 				'method'  => $method,
 				'headers' => array(
-					'Authorization' => 'Basic ' . base64_encode( $this->config->username . ':' . $this->config->password ),
+					'Authorization' => $authorization,
 					'Content-Type'  => 'application/json',
 				),
 				'body'    => $request,
@@ -67,7 +68,8 @@ class Client {
 		$body = \wp_remote_retrieve_body( $response );
 
 		// Response.
-		$response_code    = \wp_remote_retrieve_response_code( $response );
+		$response_code = \wp_remote_retrieve_response_code( $response );
+
 		$response_message = \wp_remote_retrieve_response_message( $response );
 
 		/**
@@ -90,10 +92,10 @@ class Client {
 		}
 
 		// JSON.
-		$data = json_decode( $body );
+		$data = \json_decode( $body );
 
 		// JSON error.
-		$json_error = json_last_error();
+		$json_error = \json_last_error();
 
 		if ( \JSON_ERROR_NONE !== $json_error ) {
 			throw new \Exception(
@@ -119,15 +121,6 @@ class Client {
 				),
 				\intval( $response_code )
 			);
-		}
-
-		// Error.
-		if ( \property_exists( $data, 'body' ) ) {
-			if ( isset( $data->body->error ) && ! \property_exists( $data, 'result' ) ) {
-				$error = Error::from_json( $data->body->error );
-
-				throw $error;
-			}
 		}
 
 		return $data;

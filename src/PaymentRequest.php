@@ -53,7 +53,7 @@ class PaymentRequest implements \JsonSerializable {
 	/**
 	 * Set bank.
 	 *
-	 * @param BankDetails $bank Bank.
+	 * @param BankDetails|null $bank Bank.
 	 * @return void
 	 */
 	public function set_bank( BankDetails $bank = null ) {

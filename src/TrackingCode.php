@@ -44,6 +44,16 @@ class TrackingCode implements \JsonSerializable {
 	}
 
 	/**
+	 * From ID.
+	 *
+	 * @param string|int $id ID.
+	 * @return self
+	 */
+	public static function from_id( $id ) {
+		return new self( \sprintf( '%08s', $id ) );
+	}
+
+	/**
 	 * JSON serialize.
 	 *
 	 * @return string
@@ -59,15 +69,5 @@ class TrackingCode implements \JsonSerializable {
 	 */
 	public function __toString() {
 		return $this->code;
-	}
-
-	/**
-	 * From ID.
-	 *
-	 * @param string|int $id ID.
-	 * @return self
-	 */
-	public static function from_id( $id ) {
-		return new self( \sprintf( '%08s', $id ) );
 	}
 }
