@@ -84,6 +84,21 @@ class Config extends GatewayConfig implements \JsonSerializable {
 	}
 
 	/**
+	 * Get endpoint URL.
+	 *
+	 * @link https://developers.acehubpaymentservices.com/docs/service-endpoints-and-headers
+	 * @param string $path Path.
+	 * @return string
+	 */
+	public function get_endpoint_url( $path ) {
+		if ( Gateway::MODE_TEST === $this->mode ) {
+			return SystemAddress::STAGING_SYSTEM . $path;
+		}
+
+		return SystemAddress::LIVE_SYSTEM . $path;
+	}
+
+	/**
 	 * JSON serialize.
 	 *
 	 * @return object

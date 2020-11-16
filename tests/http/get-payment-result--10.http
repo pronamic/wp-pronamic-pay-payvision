@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Content-Length: 467
+Content-Type: application/json; charset=utf-8
+Strict-Transport-Security: max-age=2592000
+Date: Mon, 16 Nov 2020 12:46:26 GMT
+Connection: close
+
+{"result":-10,"description":"Customer processing error","header":{"requestTimestamp":"2020-11-16T12:45:58Z"},"body":{"bank":{"name":"ABN_AMRO","countryCode":"NL"},"error":{"code":301000100,"message":"Transaction cancelled by user","detailedMessage":"Transaction cancelled by user"},"transaction":{"descriptor":"9764.7922.0637","amount":100,"currencyCode":"EUR","action":"payment","id":"d1251e6f-790f-4b5b-951f-6e81d5d65a93","trackingCode":"00000096","brandId":3010}}}

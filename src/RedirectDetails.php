@@ -38,8 +38,19 @@ class RedirectDetails {
 	 * @link https://github.com/WordPress/wp-notify/blob/develop/includes/JsonUnserializable.php
 	 * @param object $object Object.
 	 * @return self
+	 * @throws \JsonSchema\Exception\ValidationException Throws exception when JSON is not valid.
 	 */
 	public static function from_json( $object ) {
+		$validator = new \JsonSchema\Validator();
+
+		$validator->validate(
+			$object,
+			(object) array(
+				'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/redirect.json' ),
+			),
+			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
+		);
+
 		$redirect = new self();
 
 		if ( \property_exists( $object, 'method' ) ) {

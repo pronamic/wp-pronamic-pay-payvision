@@ -28,43 +28,12 @@ class Client {
 	private $config;
 
 	/**
-	 * Test API URL.
-	 *
-	 * @link https://developers.acehubpaymentservices.com/docs/service-endpoints-and-headers
-	 */
-	const API_URL_TEST = 'https://stagconnect.acehubpaymentservices.com/gateway/v3/';
-
-	/**
-	 * Live API URL.
-	 *
-	 * @link https://developers.acehubpaymentservices.com/docs/service-endpoints-and-headers
-	 */
-	const API_URL_LIVE = 'https://connect.acehubpaymentservices.com/gateway/v3/';
-
-	/**
 	 * Constructs and initializes an Payvision client object.
 	 *
 	 * @param Config $config Payvision config.
 	 */
 	public function __construct( Config $config ) {
 		$this->config = $config;
-	}
-
-	/**
-	 * Get API URL.
-	 *
-	 * @param string $path Path.
-	 * @return string
-	 */
-	public function get_api_url( $path ) {
-		// Remove leading slashes from path.
-		$path = \ltrim( $path, '/' );
-
-		if ( Gateway::MODE_TEST === $this->config->mode ) {
-			return self::API_URL_TEST . $path;
-		}
-
-		return self::API_URL_LIVE . $path;
 	}
 
 	/**
@@ -79,7 +48,7 @@ class Client {
 	public function send_request( $method, $path, $request = null ) {
 		// Request.
 		$response = \wp_remote_request(
-			$this->get_api_url( $path ),
+			$this->config->get_endpoint_url( $path ),
 			array(
 				'method'  => $method,
 				'headers' => array(

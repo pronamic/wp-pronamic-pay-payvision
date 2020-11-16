@@ -78,28 +78,18 @@ class TransactionResponse {
 	 * @link https://github.com/WordPress/wp-notify/blob/develop/includes/JsonUnserializable.php
 	 * @param object $object Object.
 	 * @return self
-	 * @throws \InvalidArgumentException Throws exception when required properties are not set.
+	 * @throws \JsonSchema\Exception\ValidationException Throws exception when JSON is not valid.
 	 */
 	public static function from_json( $object ) {
-		if ( ! property_exists( $object, 'action' ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `action` property.' );
-		}
+		$validator = new \JsonSchema\Validator();
 
-		if ( ! property_exists( $object, 'id' ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `id` property.' );
-		}
-
-		if ( ! property_exists( $object, 'trackingCode' ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `trackingCode` property.' );
-		}
-
-		if ( ! property_exists( $object, 'amount' ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `amount` property.' );
-		}
-
-		if ( ! property_exists( $object, 'currencyCode' ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `currencyCode` property.' );
-		}
+		$validator->validate(
+			$object,
+			(object) array(
+				'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/transaction-response.json' ),
+			),
+			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
+		);
 
 		/* phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase */
 		return new self( $object->action, $object->id, $object->trackingCode, $object->amount, $object->currencyCode );

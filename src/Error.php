@@ -65,20 +65,18 @@ class Error extends \Exception {
 	 *
 	 * @param object $object Object.
 	 * @return self
-	 * @throws \InvalidArgumentException Throws exception when required properties are not set.
+	 * @throws \JsonSchema\Exception\ValidationException Throws exception when JSON is not valid.
 	 */
 	public static function from_json( $object ) {
-		if ( ! property_exists( $object, 'code' ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `code` property.' );
-		}
+		$validator = new \JsonSchema\Validator();
 
-		if ( ! property_exists( $object, 'message' ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `message` property.' );
-		}
-
-		if ( ! property_exists( $object, 'detailedMessage' ) ) {
-			throw new \InvalidArgumentException( 'Object must contain `detailedMessage` property.' );
-		}
+		$validator->validate(
+			$object,
+			(object) array(
+				'$ref' => 'file://' . realpath( __DIR__ . '/../json-schemas/error.json' ),
+			),
+			\JsonSchema\Constraints\Constraint::CHECK_MODE_EXCEPTIONS
+		);
 
 		/* phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase */
 		return new self( $object->code, $object->message, $object->detailedMessage );

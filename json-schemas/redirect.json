@@ -1,0 +1,22 @@
+{
+	"$id": "https://github.com/wp-pay-gateways/payvision/blob/master/json-schemas/redirect.json",
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"title": "Payvision redirect.",
+	"type": "object",
+	"properties": {
+		"method": {
+			"type": "string",
+			"description": "POST or GET (depends on brand used). The default value is POST",
+			"enum": ["POST", "GET"],
+			"maxLength": 4
+		},
+		"url": {
+			"type": "string",
+			"description": "URL including the query string to which your customer is redirected (depends on brand used)."
+		},
+		"fields": {
+			"type": "object",
+			"description": "Hidden fields (parameters) to post in the body of the message (can be present for redirect method POST only)."
+		}
+	}
+}

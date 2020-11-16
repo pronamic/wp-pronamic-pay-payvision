@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Content-Length: 479
+Content-Type: application/json; charset=utf-8
+Strict-Transport-Security: max-age=2592000
+Date: Mon, 16 Nov 2020 12:43:19 GMT
+Connection: close
+
+{"result":-4,"description":"Declined","header":{"requestTimestamp":"2020-11-16T12:42:56Z"},"body":{"bank":{"name":"ABN_AMRO","countryCode":"NL"},"error":{"code":300400800,"message":"Transaction declined by authorization system","detailedMessage":"Transaction declined by authorization system"},"transaction":{"descriptor":"1582.8795.0749","amount":100,"currencyCode":"EUR","action":"payment","id":"aafcbf10-61fb-4e93-a327-e45aa85d23e7","trackingCode":"00000093","brandId":3010}}}

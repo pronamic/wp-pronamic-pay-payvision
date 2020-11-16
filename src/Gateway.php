@@ -129,7 +129,7 @@ class Gateway extends Core_Gateway {
 		$transaction = new Transaction(
 			$this->config->get_store_id(),
 			$payment->get_total_amount()->get_value(),
-			$currency_code,
+			$currency_code . 'test',
 			$tracking_code
 		);
 
@@ -152,7 +152,7 @@ class Gateway extends Core_Gateway {
 		$payment->set_meta( 'payvision_tracking_code', \strval( $tracking_code ) );
 
 		// Create payment.
-		$object = $this->client->send_request( 'POST', 'payments', \wp_json_encode( $payment_request ) );
+		$object = $this->client->send_request( 'POST', '/gateway/v3/payments', \wp_json_encode( $payment_request ) );
 
 		$payment_response = PaymentResponse::from_json( $object );
 
@@ -179,7 +179,7 @@ class Gateway extends Core_Gateway {
 		// Get payment.
 		$object = $this->client->send_request(
 			'GET',
-			'payments/' . $id,
+			'/gateway/v3/payments/' . $id,
 			array(
 				'businessId' => $payment->get_meta( 'payvision_business_id' ),
 			)

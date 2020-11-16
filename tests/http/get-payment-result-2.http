@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Content-Length: 514
+Content-Type: application/json; charset=utf-8
+Strict-Transport-Security: max-age=2592000
+Date: Mon, 16 Nov 2020 12:41:19 GMT
+Connection: close
+
+{"result":2,"description":"Pending","header":{"requestTimestamp":"2020-11-16T12:36:08Z"},"body":{"bank":{"name":"ABN_AMRO","countryCode":"NL"},"redirect":{"method":"GET","url":"https://test.acaptureservices.com/connectors/demo/ideal/simulator/paymentSimulation.ftl;jsessionid=A0D6CA45D974FCD42FEC2F4F6F4CD009.uat01-vm-con04"},"transaction":{"descriptor":"2169.3978.7165  ","amount":0.01,"currencyCode":"EUR","action":"payment","id":"7e8030c3-ec05-405c-99ee-04055e0ff075","trackingCode":"00000081","brandId":3010}}}

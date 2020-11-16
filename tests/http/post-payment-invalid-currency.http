@@ -1,0 +1,7 @@
+HTTP/1.1 400 Bad Request
+Transfer-Encoding: chunked
+Content-Type: application/json
+Date: Mon, 16 Nov 2020 12:48:52 GMT
+Connection: close
+
+{"result":-1,"description":"Input error","header":{"requestTimestamp":"2020-11-16T12:48:52Z"},"body":{"error":{"code":1002,"message":"Invalid property value: body.transaction.currencyCode.","detailedMessage":"Invalid property value: body.transaction.currencyCode."}}}

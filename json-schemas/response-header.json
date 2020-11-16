@@ -1,0 +1,19 @@
+{
+	"$id": "https://github.com/wp-pay-gateways/payvision/blob/master/json-schemas/response-header.json",
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"title": "Payvision response header.",
+	"type": "object",
+	"properties": {
+		"requestTimestamp": {
+			"type": "string",
+			"description": "The combined date and time in UTC (ISO8601)."
+		},
+		"requestCode": {
+			"type": "string",
+			"description": "An internally-generated tracking code."
+		}
+	},
+	"required": [
+		"requestTimestamp"
+	]
+}
