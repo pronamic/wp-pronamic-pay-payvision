@@ -36,7 +36,7 @@ class RedirectDetails {
 	 * From JSON.
 	 *
 	 * @link https://github.com/WordPress/wp-notify/blob/develop/includes/JsonUnserializable.php
-	 * @param object $object
+	 * @param object $object Object.
 	 * @return self
 	 */
 	public static function from_json( $object ) {

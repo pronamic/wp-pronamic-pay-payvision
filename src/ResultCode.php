@@ -10,8 +10,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\Payvision;
 
-use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
-use Pronamic\WordPress\Pay\Core\GatewayConfig;
+use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 
 /**
  * Result Code
@@ -22,6 +21,35 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
  * @since   1.0.0
  */
 class ResultCode {
+	/**
+	 * Customer processing error.
+	 *
+	 * Error or cancellation of customer at supplier. For example, the customer
+	 * abandoned their transaction at the supplier.
+	 *
+	 * @var int
+	 */
+	const CUSTOMER_ERROR = -10;
+
+	/**
+	 * Declined.
+	 *
+	 * Declines, etc. In these cases the processing was performed correctly,
+	 * but the end-result for the customer is not.
+	 *
+	 * @var int
+	 */
+	const DECLINED = -4;
+
+	/**
+	 * Failed.
+	 *
+	 * The transaction failed because of a processing error at Payvision.
+	 *
+	 * @var int
+	 */
+	const FAILED = -2;
+
 	/**
 	 * Ok.
 	 *
@@ -34,7 +62,10 @@ class ResultCode {
 	/**
 	 * Waiting.
 	 *
-	 * The transaction was initiated successfully, but a payment was not yet made by the customer or not yet confirmed by the bank. Occurs for brands for which customers have to make a payment separately (like Boletos) or where the bank does not immediately confirm a payment (like SEPA).
+	 * The transaction was initiated successfully, but a payment was not yet made by the
+	 * customer or not yet confirmed by the bank. Occurs for brands for which customers
+	 * have to make a payment separately (like Boletos) or where the bank does not
+	 * immediately confirm a payment (like SEPA).
 	 *
 	 * @var int
 	 */
@@ -43,9 +74,49 @@ class ResultCode {
 	/**
 	 * Pending.
 	 *
-	 * Pending transaction, the payment was initiated and waiting for the customer to complete the payment at the bank or payment processor.
+	 * Pending transaction, the payment was initiated and waiting for the customer to
+	 * complete the payment at the bank or payment processor.
 	 *
 	 * @var int
 	 */
 	const PENDING = 2;
+
+	/**
+	 * Timeout.
+	 *
+	 * The payment timeout expired before the customer completed the payment.
+	 *
+	 * @var int
+	 */
+	const TIMEOUT = 4;
+
+
+	/**
+	 * Transform Payvision result code to WordPress payment status.
+	 *
+	 * @param int|null $result_code Payvision result code.
+	 * @return string|null WordPress payment status.
+	 */
+	public static function transform( $result_code ) {
+		switch ( $result_code ) {
+			case self::CUSTOMER_ERROR:
+				return PaymentStatus::CANCELLED;
+
+			case self::DECLINED:
+			case self::FAILED:
+				return PaymentStatus::FAILURE;
+
+			case self::TIMEOUT:
+				return PaymentStatus::EXPIRED;
+
+			case self::PENDING:
+			case self::WAITING:
+				return PaymentStatus::OPEN;
+
+			case self::OK:
+				return PaymentStatus::SUCCESS;
+		}
+
+		return null;
+	}
 }

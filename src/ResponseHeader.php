@@ -38,14 +38,16 @@ class ResponseHeader {
 	 * From JSON.
 	 *
 	 * @link https://github.com/WordPress/wp-notify/blob/develop/includes/JsonUnserializable.php
-	 * @param object $object
+	 * @param object $object Object.
 	 * @return self
+	 * @throws \InvalidArgumentException Throws exception when required property is not set.
 	 */
 	public static function from_json( $object ) {
 		if ( ! property_exists( $object, 'requestTimestamp' ) ) {
 			throw new \InvalidArgumentException( 'Object must contain `requestTimestamp` property.' );
 		}
 
+		/* phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase */
 		$header = new self( $object->requestTimestamp );
 
 		return $header;

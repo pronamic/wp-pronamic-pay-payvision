@@ -1,6 +1,6 @@
 <?php
 /**
- * Web SDK gateway
+ * Gateway
  *
  * @author    Pronamic <info@pronamic.eu>
  * @copyright 2005-2019 Pronamic
@@ -10,16 +10,11 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\Payvision;
 
-use Exception;
-use InvalidArgumentException;
-use Locale;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
-use Pronamic\WordPress\Pay\Core\Util as Core_Util;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Pronamic\WordPress\Pay\Plugin;
-use WP_Error;
 
 /**
  * Gateway
@@ -70,10 +65,10 @@ class Gateway extends Core_Gateway {
 					IssuerIdIDeal::ABN_AMRO              => __( 'ABN Amro', 'pronamic_ideal' ),
 					IssuerIdIDeal::RABOBANK              => __( 'Rabobank', 'pronamic_ideal' ),
 					IssuerIdIDeal::ING                   => __( 'ING', 'pronamic_ideal' ),
-					IssuerIdIDeal::SNS                   => __( 'SNS', 'pronamic_ideal' ),
-					IssuerIdIDeal::ASN                   => __( 'ASN', 'pronamic_ideal' ),
+					IssuerIdIDeal::SNS                   => __( 'SNS Bank', 'pronamic_ideal' ),
+					IssuerIdIDeal::ASN                   => __( 'ASN Bank', 'pronamic_ideal' ),
 					IssuerIdIDeal::REGIOBANK             => __( 'RegioBank', 'pronamic_ideal' ),
-					IssuerIdIDeal::TRIODOS               => __( 'Triodos', 'pronamic_ideal' ),
+					IssuerIdIDeal::TRIODOS               => __( 'Triodos Bank', 'pronamic_ideal' ),
 					IssuerIdIDeal::KNAB                  => __( 'Knab', 'pronamic_ideal' ),
 					IssuerIdIDeal::VAN_LANSCHOT_BANKIERS => __( 'Van Lanschot Bankiers', 'pronamic_ideal' ),
 					IssuerIdIDeal::BUNQ                  => __( 'Bunq', 'pronamic_ideal' ),
@@ -98,12 +93,21 @@ class Gateway extends Core_Gateway {
 	}
 
 	/**
-	 * Start.
+	 * Is payment method required to start transaction?
 	 *
-	 * @see Plugin::start()
+	 * @see Core_Gateway::payment_method_is_required()
+	 */
+	public function payment_method_is_required() {
+		return true;
+	}
+
+	/**
+	 * Start.
 	 *
 	 * @param Payment $payment Payment.
 	 * @return void
+	 * @throws \InvalidArgumentException Throws exception if payment ID or currency is empty.
+	 * @see Plugin::start()
 	 */
 	public function start( Payment $payment ) {
 		$header = new RequestHeader( $this->config->get_business_id() );
@@ -135,6 +139,7 @@ class Gateway extends Core_Gateway {
 
 		$payment_request = new PaymentRequest( $header, $transaction );
 
+		// iDEAL.
 		if ( BrandId::IDEAL === $transaction->get_brand_id() ) {
 			$bank = new BankDetails();
 
@@ -146,6 +151,7 @@ class Gateway extends Core_Gateway {
 		$payment->set_meta( 'payvision_business_id', $this->config->get_business_id() );
 		$payment->set_meta( 'payvision_tracking_code', \strval( $tracking_code ) );
 
+		// Create payment.
 		$object = $this->client->send_request( 'POST', 'payments', \wp_json_encode( $payment_request ) );
 
 		$payment_response = PaymentResponse::from_json( $object );
@@ -162,16 +168,6 @@ class Gateway extends Core_Gateway {
 	}
 
 	/**
-	 * Payment redirect.
-	 *
-	 * @param Payment $payment Payment.
-	 * @return void
-	 */
-	public function payment_redirect( Payment $payment ) {
-
-	}
-
-	/**
 	 * Update status of the specified payment.
 	 *
 	 * @param Payment $payment Payment.
@@ -180,17 +176,29 @@ class Gateway extends Core_Gateway {
 	public function update_status( Payment $payment ) {
 		$id = $payment->get_transaction_id();
 
-		$business_id = $payment->get_meta( 'payvision_business_id' );
-
-		$object = $this->client->send_request( 'GET', 'payments/' . $id, array( 'businessId' => $business_id ) );
+		// Get payment.
+		$object = $this->client->send_request(
+			'GET',
+			'payments/' . $id,
+			array(
+				'businessId' => $payment->get_meta( 'payvision_business_id' ),
+			)
+		);
 
 		$response = PaymentResponse::from_json( $object );
 
-		switch ( $response->get_result() ) {
-			case ResultCode::OK:
-				$payment->set_status( PaymentStatus::SUCCESS );
+		// Update payment status.
+		$result_code = $response->get_result();
 
-				break;
+		$status = ResultCode::transform( $result_code );
+
+		if ( null !== $status ) {
+			$payment->set_status( $status );
+		}
+
+		// Add error as note.
+		if ( null !== $response->error ) {
+			$payment->add_note( sprintf( '%s: %s', $response->error->get_code(), $response->error->get_message() ) );
 		}
 	}
 }

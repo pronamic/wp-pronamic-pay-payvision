@@ -27,7 +27,7 @@ class PaymentResponse {
 	private $result;
 
 	/**
-	 * A short description of the result..
+	 * A short description of the result.
 	 *
 	 * @var string
 	 */
@@ -41,11 +41,11 @@ class PaymentResponse {
 	private $header;
 
 	/**
-	 * Transaction.
+	 * Error.
 	 *
-	 * @var TransactionResponse|null
+	 * @var Error|null
 	 */
-	public $transaction;
+	public $error;
 
 	/**
 	 * Redirect.
@@ -54,6 +54,12 @@ class PaymentResponse {
 	 */
 	public $redirect;
 
+	/**
+	 * Transaction.
+	 *
+	 * @var TransactionResponse|null
+	 */
+	public $transaction;
 	/**
 	 * Construct and initialize payment response
 	 *
@@ -79,8 +85,9 @@ class PaymentResponse {
 	/**
 	 * From JSON.
 	 *
-	 * @param object $object
+	 * @param object $object Object.
 	 * @return self
+	 * @throws \InvalidArgumentException Throws exception when required properties are not set.
 	 */
 	public static function from_json( $object ) {
 		if ( ! property_exists( $object, 'result' ) ) {
@@ -98,6 +105,10 @@ class PaymentResponse {
 		$response = new self( $object->result, $object->description, ResponseHeader::from_json( $object->header ) );
 
 		if ( property_exists( $object, 'body' ) ) {
+			if ( property_exists( $object->body, 'error' ) ) {
+				$response->error = Error::from_json( $object->body->error );
+			}
+
 			if ( property_exists( $object->body, 'redirect' ) ) {
 				$response->redirect = RedirectDetails::from_json( $object->body->redirect );
 			}

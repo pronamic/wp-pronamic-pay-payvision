@@ -28,12 +28,43 @@ class Client {
 	private $config;
 
 	/**
+	 * Test API URL.
+	 *
+	 * @link https://developers.acehubpaymentservices.com/docs/service-endpoints-and-headers
+	 */
+	const API_URL_TEST = 'https://stagconnect.acehubpaymentservices.com/gateway/v3/';
+
+	/**
+	 * Live API URL.
+	 *
+	 * @link https://developers.acehubpaymentservices.com/docs/service-endpoints-and-headers
+	 */
+	const API_URL_LIVE = 'https://connect.acehubpaymentservices.com/gateway/v3/';
+
+	/**
 	 * Constructs and initializes an Payvision client object.
 	 *
 	 * @param Config $config Payvision config.
 	 */
 	public function __construct( Config $config ) {
 		$this->config = $config;
+	}
+
+	/**
+	 * Get API URL.
+	 *
+	 * @param string $path Path.
+	 * @return string
+	 */
+	public function get_api_url( $path ) {
+		// Remove leading slashes from path.
+		$path = \ltrim( $path, '/' );
+
+		if ( Gateway::MODE_TEST === $this->config->mode ) {
+			return self::API_URL_TEST . $path;
+		}
+
+		return self::API_URL_LIVE . $path;
 	}
 
 	/**
@@ -47,10 +78,8 @@ class Client {
 	 */
 	public function send_request( $method, $path, $request = null ) {
 		// Request.
-		$url = 'https://stagconnect.acehubpaymentservices.com/gateway/v3/' . $path;
-
 		$response = \wp_remote_request(
-			$url,
+			$this->get_api_url( $path ),
 			array(
 				'method'  => $method,
 				'headers' => array(
@@ -76,7 +105,7 @@ class Client {
 		 * On PHP 7 or higher the `json_decode` function will return `null` and
 		 * `json_last_error` will return `4` (Syntax error). On PHP 5.6 or lower
 		 * the `json_decode` will also return `null`, but json_last_error` will
-		 * return `0` (No error). Therefor we check if the HTTP response body
+		 * return `0` (No error). Therefore we check if the HTTP response body
 		 * is an empty string.
 		 *
 		 * @link https://3v4l.org/
@@ -125,7 +154,7 @@ class Client {
 
 		// Error.
 		if ( \property_exists( $data, 'body' ) ) {
-			if ( isset( $data->body->error ) ) {
+			if ( isset( $data->body->error ) && ! \property_exists( $data, 'result' ) ) {
 				$error = Error::from_json( $data->body->error );
 
 				throw $error;

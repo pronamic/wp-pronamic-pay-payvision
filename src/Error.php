@@ -34,6 +34,7 @@ class Error extends \Exception {
 	 * @param int    $code             Code.
 	 * @param string $message          Message.
 	 * @param string $detailed_message Detailed message.
+	 * @return void
 	 */
 	public function __construct( $code, $message, $detailed_message ) {
 		parent::__construct( $message, $code );
@@ -42,10 +43,29 @@ class Error extends \Exception {
 	}
 
 	/**
+	 * Get code.
+	 *
+	 * @return int|string
+	 */
+	public function get_code() {
+		return $this->getCode();
+	}
+
+	/**
+	 * Get message.
+	 *
+	 * @return string
+	 */
+	public function get_message() {
+		return $this->getMessage();
+	}
+
+	/**
 	 * From JSON.
 	 *
-	 * @param object $object
+	 * @param object $object Object.
 	 * @return self
+	 * @throws \InvalidArgumentException Throws exception when required properties are not set.
 	 */
 	public static function from_json( $object ) {
 		if ( ! property_exists( $object, 'code' ) ) {
@@ -60,6 +80,7 @@ class Error extends \Exception {
 			throw new \InvalidArgumentException( 'Object must contain `detailedMessage` property.' );
 		}
 
+		/* phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase */
 		return new self( $object->code, $object->message, $object->detailedMessage );
 	}
 }

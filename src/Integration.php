@@ -10,9 +10,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\Payvision;
 
-use Pronamic\WordPress\Pay\Dependencies\PhpExtensionDependency;
 use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
-use Pronamic\WordPress\Pay\Util as Pay_Util;
 
 /**
  * Integration
@@ -43,10 +41,7 @@ class Integration extends AbstractGatewayIntegration {
 				'provider'      => 'payvision',
 				'url'           => \__( 'https://www.payvision.com/', 'pronamic_ideal' ),
 				'product_url'   => \__( 'https://www.payvision.com/', 'pronamic_ideal' ),
-				'dashboard_url' => array(
-					\__( 'test', 'pronamic_ideal' ) => 'https://tools.payvisionservices.com/acecontrol/dashboard',
-					\__( 'live', 'pronamic_ideal' ) => 'https://tools.payvisionservices.com/acecontrol/dashboard',
-				),
+				'dashboard_url' => 'https://tools.payvisionservices.com/acecontrol/dashboard',
 				'manual_url'    => \__( 'https://www.pronamic.eu/manuals/using-payvision-pronamic-pay/', 'pronamic_ideal' ),
 				'supports'      => array(),
 			)
@@ -115,12 +110,13 @@ class Integration extends AbstractGatewayIntegration {
 	 * @return Config
 	 */
 	public function get_config( $post_id ) {
+		$mode        = $this->get_meta( $post_id, 'mode' );
 		$business_id = $this->get_meta( $post_id, 'payvision_business_id' );
 		$username    = $this->get_meta( $post_id, 'payvision_username' );
 		$password    = $this->get_meta( $post_id, 'payvision_password' );
 		$store_id    = $this->get_meta( $post_id, 'payvision_store_id' );
 
-		$config = new Config( $business_id, $username, $password, $store_id );
+		$config = new Config( $mode, $business_id, $username, $password, $store_id );
 
 		return $config;
 	}

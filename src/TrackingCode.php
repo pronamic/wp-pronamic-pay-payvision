@@ -32,6 +32,8 @@ class TrackingCode implements \JsonSerializable {
 	 * Construct and initialize tracking code.
 	 *
 	 * @param string $code Code.
+	 * @return void
+	 * @throws \InvalidArgumentException Throws exception if length of code is less than 8 characters.
 	 */
 	public function __construct( $code ) {
 		if ( \strlen( $code ) < 8 ) {
