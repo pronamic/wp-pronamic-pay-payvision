@@ -29,6 +29,8 @@ class PaymentResponseTest extends \WP_UnitTestCase {
 		$this->assertInstanceOf( ResponseHeader::class, $response_header );
 		$this->assertInstanceOf( PaymentResponse::class, $payment_response );
 		$this->assertEquals( ResultCode::PENDING, $payment_response->get_result() );
+		$this->assertEquals( 'Pending', $payment_response->get_description() );
+		$this->assertEquals( $response_header, $payment_response->get_header() );
 	}
 
 	/**

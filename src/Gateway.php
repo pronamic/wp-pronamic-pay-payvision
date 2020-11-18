@@ -126,7 +126,7 @@ class Gateway extends Core_Gateway {
 		$transaction = new Transaction(
 			$this->config->get_store_id(),
 			$payment->get_total_amount()->get_value(),
-			$currency_code . 'test',
+			$currency_code,
 			$tracking_code
 		);
 

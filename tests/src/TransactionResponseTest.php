@@ -31,5 +31,10 @@ class TransactionResponseTest extends \WP_UnitTestCase {
 		);
 
 		$this->assertInstanceOf( TransactionResponse::class, $transaction_response );
+		$this->assertEquals( 'payment', $transaction_response->get_action() );
+		$this->assertEquals( '3d40de42-d70f-49e9-8219-a999247945be', $transaction_response->get_id() );
+		$this->assertEquals( '0948143a-3f04-4627-94a7-e807fc1949fb', $transaction_response->get_tracking_code() );
+		$this->assertEquals( 1, $transaction_response->get_amount() );
+		$this->assertEquals( 'EUR', $transaction_response->get_currency_code() );
 	}
 }
