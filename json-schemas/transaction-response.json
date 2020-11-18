@@ -1,0 +1,53 @@
+{
+	"$id": "https://github.com/wp-pay-gateways/payvision/blob/master/json-schemas/transaction-response.json",
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"title": "Payvision transaction response.",
+	"type": "object",
+	"properties": {
+		"action": {
+			"type": "string",
+			"description": "Actual action performed.",
+			"enum": ["payment", "authorize"]
+		},
+		"id": {
+			"type": "string",
+			"description": "Unique transaction ID given to each transaction.",
+			"maxLength": 100
+		},
+		"trackingCode": {
+			"type": "string",
+			"description": "Your unique transaction reference.",
+			"maxLength": 100
+		},
+		"amount": {
+			"type": "number",
+			"description": "Amount of the transaction."
+		},
+		"currencyCode": {
+			"type": "string",
+			"description": "Currency code of the amount of the transaction.",
+			"maxLength": 3
+		},
+		"brandId": {
+			"type": "number",
+			"description": "Identified payment brand."
+		},
+		"descriptor": {
+			"type": "string",
+			"description": "Descriptor determined by Gateway.",
+			"maxLength": 127
+		},
+		"schemeTransactionId": {
+			"type": "string",
+			"description": "The Scheme Transaction Id for the transaction. This value is returned by the relevant card scheme for each payment transaction (authorize/payment).",
+			"maxLength": 15
+		}
+	},
+	"required": [
+		"action",
+		"id",
+		"trackingCode",
+		"amount",
+		"currencyCode"
+	]
+}

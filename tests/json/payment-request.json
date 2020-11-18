@@ -1,24 +1,17 @@
 {
-  "amount": {
-    "currency": "EUR",
-    "value": 1000
-  },
-  "applicationInfo": {
-    "externalPlatform": {
-      "integrator": "Pronamic",
-      "name": "WordPress",
-      "version": "5.3.2"
+    "action": "payment",
+    "header": {
+        "businessId": "123456"
     },
-    "merchantApplication": {
-      "name": "Pronamic Pay",
-      "version": "5.9.0"
+    "body": {
+        "transaction": {
+            "storeId": "1",
+            "amount": 50,
+            "currencyCode": "EUR",
+            "trackingCode": "12345678"
+        },
+        "bank": {
+            "issuerId": "10"
+        }
     }
-  },
-  "reference": "Your order number",
-  "paymentMethod": {
-    "type": "ideal",
-    "issuer": "1121"
-  },
-  "returnUrl": "https://your-company.com/...",
-  "merchantAccount": "YOUR_MERCHANT_ACCOUNT"
 }

@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Content-Length: 430
+Content-Type: application/json; charset=utf-8
+Strict-Transport-Security: max-age=2592000
+Date: Mon, 16 Nov 2020 11:38:21 GMT
+Connection: close
+
+{"result":0,"description":"Ok","header":{"requestTimestamp":"2020-11-11T12:32:35Z"},"body":{"bank":{"name":"RABOBANK","countryCode":"NL","accountNumber":"0213698412","accountHolderName":"Onderheuvel","iban":"NL17RABO0213698412","bic":"RABONL2U"},"transaction":{"descriptor":"2890.1946.3165","amount":50,"currencyCode":"EUR","action":"payment","id":"00a502ba-d289-4ee1-a43e-3c4e1de76b4d","trackingCode":"00000077","brandId":3010}}}

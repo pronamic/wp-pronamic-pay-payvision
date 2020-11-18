@@ -1,0 +1,9 @@
+{
+    "storeId": "123456",
+    "amount": 50,
+    "currencyCode": "EUR",
+    "trackingCode": "12345678",
+    "brandId": "3010",
+    "purchaseId": 123456,
+    "returnUrl": "https:\/\/example.com\/"
+}

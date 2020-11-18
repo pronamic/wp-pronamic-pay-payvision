@@ -1,0 +1,25 @@
+{
+	"$id": "https://github.com/wp-pay-gateways/payvision/blob/master/json-schemas/error.json",
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"title": "Payvision error.",
+	"type": "object",
+	"properties": {
+		"code": {
+			"type": "number",
+			"description": "Multiple errors are possible. Not mandatory for a number of results."
+		},
+		"message": {
+			"type": "string",
+			"description": "Error code (internally raised EVENT/ERROR CODE) on detailed level."
+		},
+		"detailedMessage": {
+			"type": "string",
+			"description": "A more detailed error message when available. If not available, contains the same as error.message."
+		}
+	},
+	"required": [
+		"code",
+		"message",
+		"detailedMessage"
+	]
+}

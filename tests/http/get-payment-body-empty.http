@@ -1,0 +1,7 @@
+HTTP/1.1 200 OK
+Content-Length: 430
+Content-Type: application/json; charset=utf-8
+Strict-Transport-Security: max-age=2592000
+Date: Mon, 16 Nov 2020 11:38:21 GMT
+Connection: close
+

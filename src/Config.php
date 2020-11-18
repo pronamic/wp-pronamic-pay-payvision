@@ -10,7 +10,6 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\Payvision;
 
-use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\GatewayConfig;
 
 /**
@@ -20,47 +19,115 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
  * @version 1.1.1
  * @since   1.0.0
  */
-class Config extends GatewayConfig {
+class Config extends GatewayConfig implements \JsonSerializable {
 	/**
 	 * Business Id.
 	 *
 	 * @var string
 	 */
-	public $business_id;
+	private $business_id;
 
 	/**
 	 * User.
 	 *
 	 * @var string
 	 */
-	public $username;
+	private $username;
 
 	/**
 	 * Password.
 	 *
 	 * @var string
 	 */
-	public $password;
+	private $password;
 
 	/**
 	 * Store ID.
 	 *
 	 * @var string
 	 */
-	public $store_id;
+	private $store_id;
 
 	/**
 	 * Construct config object.
 	 *
+	 * @param string $mode        Mode.
 	 * @param string $business_id Business Id.
 	 * @param string $username    Username.
 	 * @param string $password    Password.
 	 * @param string $store_id    Store ID.
 	 */
-	public function __construct( $business_id, $username, $password, $store_id ) {
+	public function __construct( $mode, $business_id, $username, $password, $store_id ) {
+		$this->mode        = $mode;
 		$this->business_id = $business_id;
 		$this->username    = $username;
 		$this->password    = $password;
 		$this->store_id    = $store_id;
+	}
+
+	/**
+	 * Get business ID.
+	 *
+	 * @return string
+	 */
+	public function get_business_id() {
+		return $this->business_id;
+	}
+
+	/**
+	 * Get username.
+	 *
+	 * @return string
+	 */
+	public function get_username() {
+		return $this->username;
+	}
+
+	/**
+	 * Get password.
+	 *
+	 * @return string
+	 */
+	public function get_password() {
+		return $this->password;
+	}
+
+	/**
+	 * Get store ID.
+	 *
+	 * @return string
+	 */
+	public function get_store_id() {
+		return $this->store_id;
+	}
+
+	/**
+	 * Get endpoint URL.
+	 *
+	 * @link https://developers.acehubpaymentservices.com/docs/service-endpoints-and-headers
+	 * @param string $path Path.
+	 * @return string
+	 */
+	public function get_endpoint_url( $path ) {
+		if ( Gateway::MODE_TEST === $this->mode ) {
+			return SystemAddress::STAGING_SYSTEM . $path;
+		}
+
+		return SystemAddress::LIVE_SYSTEM . $path;
+	}
+
+	/**
+	 * JSON serialize.
+	 *
+	 * @return object
+	 */
+	public function jsonSerialize() {
+		return (object) array(
+			'mode'        => $this->mode,
+			'business_id' => $this->business_id,
+			'username'    => $this->username,
+			'password'    => $this->password,
+			'store_id'    => $this->store_id,
+		);
 	}
 }
