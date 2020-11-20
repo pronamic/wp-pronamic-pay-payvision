@@ -57,40 +57,20 @@ class Integration extends AbstractGatewayIntegration {
 	 * Setup.
 	 */
 	public function setup() {
-		\add_action( 'admin_init', array( $this, 'admin_init' ) );
+		\add_filter( 'pronamic_gateway_configuration_display_value_' . $this->get_id(), array( $this, 'gateway_configuration_display_value' ), 10, 2 );
 	}
 
 	/**
-	 * Admin initialize.
+	 * Gateway configuration display value.
 	 *
-	 * @return void
+	 * @param string $display_value Display value.
+	 * @param int    $post_id       Gateway configuration post ID.
+	 * @return string
 	 */
-	public function admin_init() {
-		\add_action( 'manage_pronamic_gateway_posts_custom_column', array( $this, 'custom_columns' ), 10, 2 );
-	}
-
-	/**
-	 * Custom columns.
-	 *
-	 * @param string $column  Column.
-	 * @param int    $post_id Post ID.
-	 * @return void
-	 */
-	public function custom_columns( $column, $post_id ) {
-		$id = \get_post_meta( $post_id, '_pronamic_gateway_id', true );
-
-		if ( $this->get_id() !== $id ) {
-			return;
-		}
-
+	public function gateway_configuration_display_value( $display_value, $post_id ) {
 		$config = $this->get_config( $post_id );
 
-		switch ( $column ) {
-			case 'pronamic_gateway_id':
-				echo \esc_html( $config->get_business_id() );
-
-				break;
-		}
+		return $config->get_business_id();
 	}
 
 	/**
