@@ -104,7 +104,6 @@ class Gateway extends Core_Gateway {
 	 * @param Payment $payment Payment.
 	 * @return void
 	 * @throws \InvalidArgumentException Throws exception if payment ID or currency is empty.
-	 * @see Plugin::start()
 	 */
 	public function start( Payment $payment ) {
 		$header = new RequestHeader( $this->config->get_business_id() );
