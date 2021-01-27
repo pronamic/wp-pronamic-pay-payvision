@@ -66,12 +66,14 @@ class Client {
 
 		// Object.
 		if ( ! \is_object( $data ) ) {
+			$response_code = $response->status();
+
 			throw new \Exception(
 				\sprintf(
 					'Could not JSON decode Payvision response to an object, HTTP response: "%s %s", HTTP body: "%s".',
 					$response_code,
-					$response_message,
-					$body
+					$response->message(),
+					$response->body()
 				),
 				\intval( $response_code )
 			);
