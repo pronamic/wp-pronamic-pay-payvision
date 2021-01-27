@@ -70,6 +70,13 @@ class Transaction implements \JsonSerializable {
 	private $return_url;
 
 	/**
+	 * Decriptor.
+	 *
+	 * @var string|null
+	 */
+	private $descriptor;
+
+	/**
 	 * Construct and initialize request header.
 	 *
 	 * @param string       $store_id      Store ID.
@@ -124,6 +131,25 @@ class Transaction implements \JsonSerializable {
 	}
 
 	/**
+	 * Get descriptor.
+	 *
+	 * @return string|null
+	 */
+	public function get_descriptor() {
+		return $this->descriptor;
+	}
+
+	/**
+	 * Set descriptor.
+	 *
+	 * @param string|null $descriptor Descriptor.
+	 * @return void
+	 */
+	public function set_descriptor( $descriptor ) {
+		$this->descriptor = $descriptor;
+	}
+
+	/**
 	 * JSON serialize.
 	 *
 	 * @return object
@@ -146,6 +172,10 @@ class Transaction implements \JsonSerializable {
 
 		if ( null !== $this->return_url ) {
 			$data['returnUrl'] = $this->return_url;
+		}
+
+		if ( null !== $this->descriptor ) {
+			$data['descriptor'] = $this->descriptor;
 		}
 
 		return (object) $data;

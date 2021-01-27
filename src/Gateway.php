@@ -132,6 +132,7 @@ class Gateway extends Core_Gateway {
 		$transaction->set_purchase_id( $payment->format_string( (string) $this->config->get_purchase_id() ) );
 		$transaction->set_return_url( $payment->get_return_url() );
 		$transaction->set_brand_id( BrandId::from_core( $payment->get_method() ) );
+		$transaction->set_descriptor( DataHelper::sanitize_an( (string) $payment->get_description(), 127 ) );
 
 		$payment_request = new PaymentRequest( $header, $transaction );
 
