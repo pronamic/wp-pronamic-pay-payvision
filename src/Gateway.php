@@ -129,7 +129,7 @@ class Gateway extends Core_Gateway {
 			$tracking_code
 		);
 
-		$transaction->set_purchase_id( \strval( $payment->get_id() ) );
+		$transaction->set_purchase_id( $payment->format_string( (string) $this->config->get_purchase_id() ) );
 		$transaction->set_return_url( $payment->get_return_url() );
 		$transaction->set_brand_id( BrandId::from_core( $payment->get_method() ) );
 

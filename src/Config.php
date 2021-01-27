@@ -49,6 +49,13 @@ class Config extends GatewayConfig implements \JsonSerializable {
 	private $store_id;
 
 	/**
+	 * Purchase ID.
+	 *
+	 * @var string|null
+	 */
+	private $purchase_id;
+
+	/**
 	 * Construct config object.
 	 *
 	 * @param string $mode        Mode.
@@ -117,6 +124,25 @@ class Config extends GatewayConfig implements \JsonSerializable {
 	}
 
 	/**
+	 * Get purchase ID.
+	 *
+	 * @return string|null
+	 */
+	public function get_purchase_id() {
+		return $this->purchase_id;
+	}
+
+	/**
+	 * Set purchase ID.
+	 *
+	 * @param string|null $purchase_id Purchase ID.
+	 * @return void
+	 */
+	public function set_purchase_id( $purchase_id ) {
+		$this->purchase_id = $purchase_id;
+	}
+
+	/**
 	 * JSON serialize.
 	 *
 	 * @return object
@@ -128,6 +154,7 @@ class Config extends GatewayConfig implements \JsonSerializable {
 			'username'    => $this->username,
 			'password'    => $this->password,
 			'store_id'    => $this->store_id,
+			'purchase_id' => $this->purchase_id,
 		);
 	}
 }
