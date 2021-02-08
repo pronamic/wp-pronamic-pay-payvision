@@ -3,7 +3,7 @@
  * Payvision client
  *
  * @author Pronamic <info@pronamic.eu>
- * @copyright 2005-2020 Pronamic
+ * @copyright 2005-2021 Pronamic
  * @license GPL-3.0-or-later
  * @package Pronamic\WordPress\Pay\Gateways\Payvision
  */
@@ -17,7 +17,7 @@ use Pronamic\WordPress\Pay\Facades\Http;
  *
  * @link https://github.com/payvisionpayments/php/blob/master/generatepaymentform.php
  * @author Remco Tolsma
- * @version 1.0.5
+ * @version 1.1.0
  * @since 1.0.0
  */
 class Client {
@@ -66,12 +66,14 @@ class Client {
 
 		// Object.
 		if ( ! \is_object( $data ) ) {
+			$response_code = $response->status();
+
 			throw new \Exception(
 				\sprintf(
 					'Could not JSON decode Payvision response to an object, HTTP response: "%s %s", HTTP body: "%s".',
 					$response_code,
-					$response_message,
-					$body
+					$response->message(),
+					$response->body()
 				),
 				\intval( $response_code )
 			);

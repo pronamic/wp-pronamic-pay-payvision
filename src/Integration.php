@@ -3,7 +3,7 @@
  * Integration
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2020 Pronamic
+ * @copyright 2005-2021 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\Payvision
  */
@@ -16,7 +16,7 @@ use Pronamic\WordPress\Pay\AbstractGatewayIntegration;
  * Integration
  *
  * @author  Remco Tolsma
- * @version 1.1.2
+ * @version 1.1.0
  * @since   1.0.0
  */
 class Integration extends AbstractGatewayIntegration {
@@ -57,7 +57,12 @@ class Integration extends AbstractGatewayIntegration {
 	 * Setup.
 	 */
 	public function setup() {
-		\add_filter( 'pronamic_gateway_configuration_display_value_' . $this->get_id(), array( $this, 'gateway_configuration_display_value' ), 10, 2 );
+		\add_filter(
+			'pronamic_gateway_configuration_display_value_' . $this->get_id(),
+			array( $this, 'gateway_configuration_display_value' ),
+			10,
+			2
+		);
 	}
 
 	/**
@@ -125,6 +130,37 @@ class Integration extends AbstractGatewayIntegration {
 			'classes'  => array( 'regular-text', 'code' ),
 		);
 
+		// Purchase ID.
+		$code_field = \sprintf( '<code>%s</code>', 'purchaseId' );
+
+		$fields[] = array(
+			'section'     => 'advanced',
+			'filter'      => \FILTER_SANITIZE_STRING,
+			'meta_key'    => '_pronamic_gateway_payvision_purchase_id',
+			'title'       => \__( 'Order ID', 'pronamic_ideal' ),
+			'type'        => 'text',
+			'classes'     => array( 'regular-text', 'code' ),
+			'tooltip'     => \sprintf(
+				/* translators: %s: <code>purchaseId</code> */
+				\__( 'The Payvision parameter %s', 'pronamic_ideal' ),
+				$code_field
+			),
+			'description' => \sprintf(
+				'%s %s<br />%s',
+				\__( 'Available tags:', 'pronamic_ideal' ),
+				\sprintf(
+					'<code>%s</code> <code>%s</code>',
+					'{order_id}',
+					'{payment_id}'
+				),
+				\sprintf(
+					/* translators: %s: default code */
+					\__( 'Default: <code>%s</code>', 'pronamic_ideal' ),
+					'{payment_id}'
+				)
+			),
+		);
+
 		// Return fields.
 		return $fields;
 	}
@@ -141,8 +177,13 @@ class Integration extends AbstractGatewayIntegration {
 		$username    = $this->get_meta( $post_id, 'payvision_username' );
 		$password    = $this->get_meta( $post_id, 'payvision_password' );
 		$store_id    = $this->get_meta( $post_id, 'payvision_store_id' );
+		$purchase_id = $this->get_meta( $post_id, 'payvision_purchase_id' );
 
-		return new Config( $mode, $business_id, $username, $password, $store_id );
+		$config = new Config( $mode, $business_id, $username, $password, $store_id );
+
+		$config->set_purchase_id( $purchase_id );
+
+		return $config;
 	}
 
 	/**

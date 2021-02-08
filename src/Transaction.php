@@ -3,7 +3,7 @@
  * Transaction
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2020 Pronamic
+ * @copyright 2005-2021 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\Payvision
  */
@@ -14,7 +14,7 @@ namespace Pronamic\WordPress\Pay\Gateways\Payvision;
  * Transaction
  *
  * @author  Remco Tolsma
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.0.0
  */
 class Transaction implements \JsonSerializable {
@@ -68,6 +68,13 @@ class Transaction implements \JsonSerializable {
 	 * @var string|null
 	 */
 	private $return_url;
+
+	/**
+	 * Decriptor.
+	 *
+	 * @var string|null
+	 */
+	private $descriptor;
 
 	/**
 	 * Construct and initialize request header.
@@ -124,6 +131,25 @@ class Transaction implements \JsonSerializable {
 	}
 
 	/**
+	 * Get descriptor.
+	 *
+	 * @return string|null
+	 */
+	public function get_descriptor() {
+		return $this->descriptor;
+	}
+
+	/**
+	 * Set descriptor.
+	 *
+	 * @param string|null $descriptor Descriptor.
+	 * @return void
+	 */
+	public function set_descriptor( $descriptor ) {
+		$this->descriptor = $descriptor;
+	}
+
+	/**
 	 * JSON serialize.
 	 *
 	 * @return object
@@ -146,6 +172,10 @@ class Transaction implements \JsonSerializable {
 
 		if ( null !== $this->return_url ) {
 			$data['returnUrl'] = $this->return_url;
+		}
+
+		if ( null !== $this->descriptor ) {
+			$data['descriptor'] = $this->descriptor;
 		}
 
 		return (object) $data;

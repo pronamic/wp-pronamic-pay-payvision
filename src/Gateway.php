@@ -19,7 +19,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
  *
  * @link https://github.com/payvisionpayments/php/blob/master/generatepaymentform.php
  * @author Remco Tolsma
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 class Gateway extends Core_Gateway {
@@ -129,9 +129,10 @@ class Gateway extends Core_Gateway {
 			$tracking_code
 		);
 
-		$transaction->set_purchase_id( \strval( $payment->get_id() ) );
+		$transaction->set_purchase_id( $payment->format_string( (string) $this->config->get_purchase_id() ) );
 		$transaction->set_return_url( $payment->get_return_url() );
 		$transaction->set_brand_id( BrandId::from_core( $payment->get_method() ) );
+		$transaction->set_descriptor( DataHelper::sanitize_an( (string) $payment->get_description(), 127 ) );
 
 		$payment_request = new PaymentRequest( $header, $transaction );
 

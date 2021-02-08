@@ -56,6 +56,10 @@
 		<exclude name="SlevomatCodingStandard.Whitespaces.DuplicateSpaces.DuplicateSpaces" />
 	</rule>
 
+    <rule ref="SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter">
+        <exclude-pattern>src/Integration.php</exclude-pattern>
+    </rule>
+
 	<rule ref="VariableAnalysis"/>
 
 	<rule ref="PHPCompatibilityWP"/>

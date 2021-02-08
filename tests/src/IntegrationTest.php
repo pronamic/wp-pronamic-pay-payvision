@@ -3,7 +3,7 @@
  * Integration test
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2020 Pronamic
+ * @copyright 2005-2021 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\Payvision
  */
@@ -14,7 +14,7 @@ namespace Pronamic\WordPress\Pay\Gateways\Payvision;
  * Integration test
  *
  * @author  Remco Tolsma
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.0.0
  */
 class IntegrationTest extends \WP_UnitTestCase {

@@ -3,7 +3,7 @@
  * Result Code Test
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2020 Pronamic
+ * @copyright 2005-2021 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\Payvision
  */
@@ -16,7 +16,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
  * Result Code Test
  *
  * @author  Remco Tolsma
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.0.0
  */
 class ResultCodeTest extends \WP_UnitTestCase {

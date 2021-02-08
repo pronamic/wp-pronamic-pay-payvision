@@ -3,7 +3,7 @@
  * Config
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2020 Pronamic
+ * @copyright 2005-2021 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\Payvision
  */
@@ -16,7 +16,7 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
  * Config
  *
  * @author  Remco Tolsma
- * @version 1.1.1
+ * @version 1.1.0
  * @since   1.0.0
  */
 class Config extends GatewayConfig implements \JsonSerializable {
@@ -47,6 +47,13 @@ class Config extends GatewayConfig implements \JsonSerializable {
 	 * @var string
 	 */
 	private $store_id;
+
+	/**
+	 * Purchase ID.
+	 *
+	 * @var string|null
+	 */
+	private $purchase_id;
 
 	/**
 	 * Construct config object.
@@ -117,6 +124,25 @@ class Config extends GatewayConfig implements \JsonSerializable {
 	}
 
 	/**
+	 * Get purchase ID.
+	 *
+	 * @return string|null
+	 */
+	public function get_purchase_id() {
+		return $this->purchase_id;
+	}
+
+	/**
+	 * Set purchase ID.
+	 *
+	 * @param string|null $purchase_id Purchase ID.
+	 * @return void
+	 */
+	public function set_purchase_id( $purchase_id ) {
+		$this->purchase_id = $purchase_id;
+	}
+
+	/**
 	 * JSON serialize.
 	 *
 	 * @return object
@@ -128,6 +154,7 @@ class Config extends GatewayConfig implements \JsonSerializable {
 			'username'    => $this->username,
 			'password'    => $this->password,
 			'store_id'    => $this->store_id,
+			'purchase_id' => $this->purchase_id,
 		);
 	}
 }
