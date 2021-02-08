@@ -14,7 +14,7 @@ namespace Pronamic\WordPress\Pay\Gateways\Payvision;
  * Tracking Code Test
  *
  * @author  Remco Tolsma
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.0.0
  */
 class TrackingCodeTest extends \WP_UnitTestCase {

@@ -19,7 +19,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
  *
  * @link https://github.com/payvisionpayments/php/blob/master/generatepaymentform.php
  * @author Remco Tolsma
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 class Gateway extends Core_Gateway {

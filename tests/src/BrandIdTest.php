@@ -16,7 +16,7 @@ use Pronamic\WordPress\Pay\Core\PaymentMethods;
  * Brand ID Test
  *
  * @author  Remco Tolsma
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.0.0
  */
 class BrandIdTest extends \WP_UnitTestCase {

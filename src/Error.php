@@ -15,7 +15,7 @@ namespace Pronamic\WordPress\Pay\Gateways\Payvision;
  *
  * @link    https://developers.acehubpaymentservices.com/v3.3/reference#payment-3-1
  * @author  Remco Tolsma
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.0.0
  */
 class Error extends \Exception {

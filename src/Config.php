@@ -16,7 +16,7 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
  * Config
  *
  * @author  Remco Tolsma
- * @version 1.1.1
+ * @version 1.1.0
  * @since   1.0.0
  */
 class Config extends GatewayConfig implements \JsonSerializable {

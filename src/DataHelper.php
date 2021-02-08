@@ -15,8 +15,8 @@ namespace Pronamic\WordPress\Pay\Gateways\Payvision;
  *
  * @link    https://github.com/wp-pay-gateways/ideal-basic/blob/2.0.0/src/DataHelper.php
  * @author  Reüel van der Steege
- * @version 1.0.2
- * @since   1.0.2
+ * @version 1.1.0
+ * @since   1.1.0
  */
 class DataHelper {
 	/**
