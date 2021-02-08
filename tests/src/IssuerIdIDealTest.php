@@ -14,7 +14,7 @@ namespace Pronamic\WordPress\Pay\Gateways\Payvision;
  * Issuer ID iDEAL Test
  *
  * @author  Remco Tolsma
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.0.0
  */
 class IssuerIdIDealTest extends \WP_UnitTestCase {

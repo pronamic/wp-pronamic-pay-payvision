@@ -17,7 +17,7 @@ use Pronamic\WordPress\Pay\Core\PaymentMethods;
  *
  * @link https://developers.acehubpaymentservices.com/v3.3/reference#brands
  * @author Remco Tolsma
- * @version 1.0.0
+ * @version 1.1.0
  * @since 1.0.0
  */
 class BrandId {
