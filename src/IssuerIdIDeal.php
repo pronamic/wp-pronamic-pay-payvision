@@ -102,4 +102,11 @@ class IssuerIdIDeal {
 	 * @var string
 	 */
 	const HANDELSBANKEN = '130';
+
+	/**
+	 * Revolut.
+	 *
+	 * @var string
+	 */
+	const REVOLUT = '140';
 }
