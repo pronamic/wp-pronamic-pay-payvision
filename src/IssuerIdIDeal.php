@@ -1,6 +1,6 @@
 <?php
 /**
- * Isseur ID iDEAL
+ * Issuer ID iDEAL
  *
  * @author    Pronamic <info@pronamic.eu>
  * @copyright 2005-2021 Pronamic
