@@ -147,7 +147,7 @@ class GatewayTest extends \WP_UnitTestCase {
 
 		$this->expectException( \Throwable::class );
 		$this->expectExceptionMessage(
-			'Could not JSON decode Payvision response, HTTP response: "404 Not Found", HTTP body length: "2", JSON error: "Syntax error".'
+			'Could not JSON decode response, HTTP response: "404 Not Found", HTTP body length: "2", JSON error: "Syntax error".'
 		);
 
 		$gateway->update_status( $payment );
@@ -171,7 +171,7 @@ class GatewayTest extends \WP_UnitTestCase {
 		$payment->set_transaction_id( '00a502ba-d289-4ee1-a43e-3c4e1de76b4e' );
 
 		$this->expectException( \Throwable::class );
-		$this->expectExceptionMessage( 'Payvision response is empty, HTTP response: "200 OK".' );
+		$this->expectExceptionMessage( 'Response is empty, HTTP response: "200 OK".' );
 
 		$gateway->update_status( $payment );
 	}
