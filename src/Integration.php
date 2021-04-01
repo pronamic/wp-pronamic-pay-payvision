@@ -181,7 +181,9 @@ class Integration extends AbstractGatewayIntegration {
 
 		$config = new Config( $mode, $business_id, $username, $password, $store_id );
 
-		$config->set_purchase_id( $purchase_id );
+		if ( '' !== $purchase_id ) {
+			$config->set_purchase_id( $purchase_id );
+		}
 
 		return $config;
 	}

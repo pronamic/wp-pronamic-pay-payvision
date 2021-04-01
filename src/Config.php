@@ -148,13 +148,18 @@ class Config extends GatewayConfig implements \JsonSerializable {
 	 * @return object
 	 */
 	public function jsonSerialize() {
-		return (object) array(
+		$data = array(
 			'mode'        => $this->mode,
 			'business_id' => $this->business_id,
 			'username'    => $this->username,
 			'password'    => $this->password,
 			'store_id'    => $this->store_id,
-			'purchase_id' => $this->purchase_id,
 		);
+
+		if ( null !== $this->purchase_id ) {
+			$data['purchase_id'] =  $this->purchase_id;
+		}
+
+		return (object) $data;
 	}
 }
