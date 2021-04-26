@@ -70,7 +70,7 @@ class Transaction implements \JsonSerializable {
 	private $return_url;
 
 	/**
-	 * Decriptor.
+	 * Descriptor.
 	 *
 	 * @var string|null
 	 */

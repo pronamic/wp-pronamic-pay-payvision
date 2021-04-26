@@ -1,6 +1,6 @@
 <?php
 /**
- * Isseur ID iDEAL
+ * Issuer ID iDEAL
  *
  * @author    Pronamic <info@pronamic.eu>
  * @copyright 2005-2021 Pronamic
@@ -102,4 +102,11 @@ class IssuerIdIDeal {
 	 * @var string
 	 */
 	const HANDELSBANKEN = '130';
+
+	/**
+	 * Revolut.
+	 *
+	 * @var string
+	 */
+	const REVOLUT = '140';
 }

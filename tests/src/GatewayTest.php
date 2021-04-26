@@ -10,6 +10,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\Payvision;
 
+use Pronamic\WordPress\Http\Factory;
 use Pronamic\WordPress\Money\TaxedMoney;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Payments\Payment;
@@ -24,64 +25,12 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
  */
 class GatewayTest extends \WP_UnitTestCase {
 	/**
-	 * Mock HTTP responses.
-	 *
-	 * @var array<string, string>
-	 */
-	private $mock_http_responses;
-
-	/**
 	 * Setup.
 	 */
 	public function setUp() {
 		parent::setUp();
 
-		// Mock HTTP responses.
-		$this->mock_http_responses = array();
-
-		\add_filter( 'pre_http_request', array( $this, 'pre_http_request' ), 10, 3 );
-	}
-
-	/**
-	 * Mock HTTP response.
-	 *
-	 * @param string $url  URL.
-	 * @param string $file File with HTTP response.
-	 */
-	public function mock_http_response( $url, $file ) {
-		$this->mock_http_responses[ $url ] = $file;
-	}
-
-	/**
-	 * Pre HTTP request
-	 *
-	 * @link https://github.com/WordPress/WordPress/blob/3.9.1/wp-includes/class-http.php#L150-L164
-	 * @param bool                 $preempt Whether to preempt an HTTP request's return value. Default false.
-	 * @param array<string, mixed> $r       HTTP request arguments.
-	 * @param string               $url     The request URL.
-	 * @return array<string, mixed>
-	 */
-	public function pre_http_request( $preempt, $r, $url ) {
-		if ( ! isset( $this->mock_http_responses[ $url ] ) ) {
-			return $preempt;
-		}
-
-		$file = $this->mock_http_responses[ $url ];
-
-		unset( $this->mock_http_responses[ $url ] );
-
-		$response = \file_get_contents( $file, true );
-
-		$processed_response = \WP_Http::processResponse( $response );
-
-		$processed_headers = \WP_Http::processHeaders( $processed_response['headers'], $url );
-
-		$processed_headers['body'] = $processed_response['body'];
-
-		// The `arguments` key is not an officiale WordPress core key, added for SlevomatCodingStandard compliance.
-		$processed_headers['arguments'] = $r;
-
-		return $processed_headers;
+		$this->factory = new Factory();
 	}
 
 	/**
@@ -114,7 +63,7 @@ class GatewayTest extends \WP_UnitTestCase {
 
 		$gateway = new Gateway( $config );
 
-		$this->mock_http_response(
+		$this->factory->fake(
 			'https://stagconnect.acehubpaymentservices.com/gateway/v3/payments/00a502ba-d289-4ee1-a43e-3c4e1de76b4d',
 			__DIR__ . '/../http/get-payment-result-0.http'
 		);
@@ -136,7 +85,7 @@ class GatewayTest extends \WP_UnitTestCase {
 
 		$gateway = new Gateway( $config );
 
-		$this->mock_http_response(
+		$this->factory->fake(
 			'https://stagconnect.acehubpaymentservices.com/gateway/v3/payments/00a502ba-d289-4ee1-a43e-3c4e1de76b4e',
 			__DIR__ . '/../http/get-payment-by-fake-id.http'
 		);
@@ -161,7 +110,7 @@ class GatewayTest extends \WP_UnitTestCase {
 
 		$gateway = new Gateway( $config );
 
-		$this->mock_http_response(
+		$this->factory->fake(
 			'https://stagconnect.acehubpaymentservices.com/gateway/v3/payments/00a502ba-d289-4ee1-a43e-3c4e1de76b4e',
 			__DIR__ . '/../http/get-payment-body-empty.http'
 		);
@@ -184,7 +133,7 @@ class GatewayTest extends \WP_UnitTestCase {
 
 		$gateway = new Gateway( $config );
 
-		$this->mock_http_response(
+		$this->factory->fake(
 			'https://stagconnect.acehubpaymentservices.com/gateway/v3/payments/00a502ba-d289-4ee1-a43e-3c4e1de76b4e',
 			__DIR__ . '/../http/get-payment-no-object.http'
 		);
@@ -235,7 +184,7 @@ class GatewayTest extends \WP_UnitTestCase {
 
 		$gateway = new Gateway( $config );
 
-		$this->mock_http_response(
+		$this->factory->fake(
 			'https://stagconnect.acehubpaymentservices.com/gateway/v3/payments',
 			__DIR__ . '/../http/post-payment.http'
 		);
