@@ -25,13 +25,6 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
  */
 class GatewayTest extends \WP_UnitTestCase {
 	/**
-	 * Mock HTTP responses.
-	 *
-	 * @var array<string, string>
-	 */
-	private $mock_http_responses;
-
-	/**
 	 * Setup.
 	 */
 	public function setUp() {

@@ -157,7 +157,7 @@ class Config extends GatewayConfig implements \JsonSerializable {
 		);
 
 		if ( null !== $this->purchase_id ) {
-			$data['purchase_id'] =  $this->purchase_id;
+			$data['purchase_id'] = $this->purchase_id;
 		}
 
 		return (object) $data;
