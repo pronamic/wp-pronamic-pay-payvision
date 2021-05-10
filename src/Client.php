@@ -10,7 +10,7 @@
 
 namespace Pronamic\WordPress\Pay\Gateways\Payvision;
 
-use Pronamic\WordPress\Pay\Facades\Http;
+use Pronamic\WordPress\Http\Facades\Http;
 
 /**
  * Payvision client
