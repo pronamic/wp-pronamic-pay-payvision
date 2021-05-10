@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased][unreleased]
 -
 
+## [1.1.2] - 2021-05-11
+### Fixed
+- Fixed "Uncaught Error: Class 'Pronamic\WordPress\Pay\Facades\Http' not found".
+
 ## [1.1.1] - 2021-04-26
 - Added Revolut iDEAL issuer.
 - Started using `pronamic/wp-http`.
@@ -21,7 +25,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 1.0.0 - 2020-11-18
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/adyen/compare/1.1.1...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/adyen/compare/1.1.2...HEAD
+[1.1.2]: https://github.com/wp-pay-gateways/payvision/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/wp-pay-gateways/payvision/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/wp-pay-gateways/payvision/compare/1.0.1...1.1.0
 [1.0.1]: https://github.com/wp-pay-gateways/adyen/compare/1.0.0...1.0.1
