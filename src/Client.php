@@ -17,7 +17,7 @@ use Pronamic\WordPress\Http\Facades\Http;
  *
  * @link https://github.com/payvisionpayments/php/blob/master/generatepaymentform.php
  * @author Remco Tolsma
- * @version 1.1.0
+ * @version 1.1.2
  * @since 1.0.0
  */
 class Client {
