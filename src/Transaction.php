@@ -28,7 +28,7 @@ class Transaction implements \JsonSerializable {
 	/**
 	 * Amount.
 	 *
-	 * @var string|float
+	 * @var string
 	 */
 	private $amount;
 
@@ -80,7 +80,7 @@ class Transaction implements \JsonSerializable {
 	 * Construct and initialize request header.
 	 *
 	 * @param string       $store_id      Store ID.
-	 * @param string|float $amount        Amount.
+	 * @param string       $amount        Amount.
 	 * @param string       $currency_code Currency code.
 	 * @param TrackingCode $tracking_code Tracking code.
 	 */
