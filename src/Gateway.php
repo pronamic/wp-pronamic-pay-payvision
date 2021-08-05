@@ -127,7 +127,7 @@ class Gateway extends Core_Gateway {
 			 * It is not needed to specify all decimals, e.g. €5.00 can be
 			 * formatted as “5”, “5.0” or “5.00".The maximum amount depends
 			 * on the brand used.
-			 * 
+			 *
 			 * @link https://developers.acehubpaymentservices.com/docs/data-types
 			 */
 			$payment->get_total_amount()->get_number()->format( null, '.', '' ),

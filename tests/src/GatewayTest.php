@@ -51,8 +51,9 @@ class GatewayTest extends \WP_UnitTestCase {
 		// Payment methods.
 		$methods = $gateway->get_supported_payment_methods();
 
-		$this->assertCount( 1, $methods );
+		$this->assertCount( 2, $methods );
 		$this->assertContains( PaymentMethods::IDEAL, $methods );
+		$this->assertContains( PaymentMethods::PAYPAL, $methods );
 	}
 
 	/**
