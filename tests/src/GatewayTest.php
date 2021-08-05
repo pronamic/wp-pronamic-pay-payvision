@@ -11,7 +11,7 @@
 namespace Pronamic\WordPress\Pay\Gateways\Payvision;
 
 use Pronamic\WordPress\Http\Factory;
-use Pronamic\WordPress\Money\TaxedMoney;
+use Pronamic\WordPress\Money\Money;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
@@ -51,8 +51,9 @@ class GatewayTest extends \WP_UnitTestCase {
 		// Payment methods.
 		$methods = $gateway->get_supported_payment_methods();
 
-		$this->assertCount( 1, $methods );
+		$this->assertCount( 2, $methods );
 		$this->assertContains( PaymentMethods::IDEAL, $methods );
+		$this->assertContains( PaymentMethods::PAYPAL, $methods );
 	}
 
 	/**
@@ -193,7 +194,7 @@ class GatewayTest extends \WP_UnitTestCase {
 
 		$payment->set_id( 1 );
 
-		$payment->set_total_amount( new TaxedMoney( 50, 'EUR' ) );
+		$payment->set_total_amount( new Money( '50', 'EUR' ) );
 
 		$gateway->start( $payment );
 

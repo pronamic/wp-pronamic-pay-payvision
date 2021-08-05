@@ -86,6 +86,7 @@ class Gateway extends Core_Gateway {
 	public function get_supported_payment_methods() {
 		return array(
 			PaymentMethods::IDEAL,
+			PaymentMethods::PAYPAL,
 		);
 	}
 
@@ -115,18 +116,22 @@ class Gateway extends Core_Gateway {
 			throw new \InvalidArgumentException( 'Can not start payment with empty ID.' );
 		}
 
-		$currency_code = $payment->get_total_amount()->get_currency()->get_alphabetic_code();
-
-		if ( null === $currency_code ) {
-			throw new \InvalidArgumentException( 'Can not start payment with empty currency code.' );
-		}
-
 		$tracking_code = TrackingCode::from_id( $payment_id );
 
 		$transaction = new Transaction(
 			$this->config->get_store_id(),
-			$payment->get_total_amount()->get_value(),
-			$currency_code,
+			/**
+			 * Amounts are to be formatted using a dot (“.”) as a decimal
+			 * separator. The maximum number of decimals depends on the
+			 * currency used and it is specified according to ISO 4217.
+			 * It is not needed to specify all decimals, e.g. €5.00 can be
+			 * formatted as “5”, “5.0” or “5.00".The maximum amount depends
+			 * on the brand used.
+			 *
+			 * @link https://developers.acehubpaymentservices.com/docs/data-types
+			 */
+			$payment->get_total_amount()->get_number()->format( null, '.', '' ),
+			$payment->get_total_amount()->get_currency()->get_alphabetic_code(),
 			$tracking_code
 		);
 
