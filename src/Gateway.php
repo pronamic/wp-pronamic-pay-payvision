@@ -146,7 +146,7 @@ class Gateway extends Core_Gateway {
 		if ( BrandId::IDEAL === $transaction->get_brand_id() ) {
 			$bank = new BankDetails();
 
-			$bank->set_issuer_id( $payment->get_issuer() );
+			$bank->set_issuer_id( $payment->get_meta( 'issuer' ) );
 
 			$payment_request->set_bank( $bank );
 		}
