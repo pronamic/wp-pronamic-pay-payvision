@@ -90,13 +90,6 @@ class IssuerIdIDeal {
 	const BUNQ = '110';
 
 	/**
-	 * Moneyou.
-	 *
-	 * @var string
-	 */
-	const MONEYOU = '120';
-
-	/**
 	 * Handelsbanken.
 	 *
 	 * @var string

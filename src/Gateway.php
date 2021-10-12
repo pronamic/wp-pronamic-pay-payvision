@@ -66,7 +66,6 @@ class Gateway extends Core_Gateway {
 					IssuerIdIDeal::BUNQ                  => \__( 'Bunq', 'pronamic_ideal' ),
 					IssuerIdIDeal::HANDELSBANKEN         => \__( 'Handelsbanken', 'pronamic_ideal' ),
 					IssuerIdIDeal::KNAB                  => \__( 'Knab', 'pronamic_ideal' ),
-					IssuerIdIDeal::MONEYOU               => \__( 'Moneyou', 'pronamic_ideal' ),
 					IssuerIdIDeal::REGIOBANK             => \__( 'RegioBank', 'pronamic_ideal' ),
 					IssuerIdIDeal::REVOLUT               => \__( 'Revolut', 'pronamic_ideal' ),
 					IssuerIdIDeal::SNS                   => \__( 'SNS Bank', 'pronamic_ideal' ),
