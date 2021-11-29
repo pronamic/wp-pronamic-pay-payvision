@@ -66,6 +66,8 @@ class BrandId {
 	/**
 	 * AfterPay.
 	 *
+	 * Note: this is for AfterPay (afterpay.nl) and not for Afterpay (afterpay.com)
+	 *
 	 * @var string
 	 */
 	const AFTERPAY = '5020';
@@ -78,7 +80,7 @@ class BrandId {
 	 */
 	public static function from_core( $method ) {
 		switch ( $method ) {
-			case PaymentMethods::AFTERPAY:
+			case PaymentMethods::AFTERPAY_NL:
 				return self::AFTERPAY;
 
 			case PaymentMethods::BANCONTACT:
