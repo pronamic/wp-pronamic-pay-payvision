@@ -3,7 +3,7 @@
  * Brand ID Test
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2021 Pronamic
+ * @copyright 2005-2022 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\Payvision
  */
@@ -47,7 +47,7 @@ class BrandIdTest extends \WP_UnitTestCase {
 	 */
 	public function provider_test_from_core() {
 		return array(
-			array( PaymentMethods::AFTERPAY, BrandId::AFTERPAY ),
+			array( PaymentMethods::AFTERPAY_NL, BrandId::AFTERPAY ),
 			array( PaymentMethods::BANCONTACT, BrandId::BCMC ),
 			array( PaymentMethods::IDEAL, BrandId::IDEAL ),
 			array( PaymentMethods::PAYPAL, BrandId::PAYPAL ),

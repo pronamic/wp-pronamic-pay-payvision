@@ -2,10 +2,10 @@
 /**
  * Gateway
  *
- * @author Pronamic <info@pronamic.eu>
- * @copyright 2005-2019 Pronamic
- * @license GPL-3.0-or-later
- * @package Pronamic\WordPress\Pay\Gateways\Payvision
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2022 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay\Gateways\Payvision
  */
 
 namespace Pronamic\WordPress\Pay\Gateways\Payvision;
@@ -17,10 +17,10 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 /**
  * Gateway
  *
- * @link https://github.com/payvisionpayments/php/blob/master/generatepaymentform.php
- * @author Remco Tolsma
+ * @link    https://github.com/payvisionpayments/php/blob/master/generatepaymentform.php
+ * @author  Remco Tolsma
  * @version 1.1.0
- * @since 1.0.0
+ * @since   1.0.0
  */
 class Gateway extends Core_Gateway {
 	/**
@@ -66,7 +66,6 @@ class Gateway extends Core_Gateway {
 					IssuerIdIDeal::BUNQ                  => \__( 'Bunq', 'pronamic_ideal' ),
 					IssuerIdIDeal::HANDELSBANKEN         => \__( 'Handelsbanken', 'pronamic_ideal' ),
 					IssuerIdIDeal::KNAB                  => \__( 'Knab', 'pronamic_ideal' ),
-					IssuerIdIDeal::MONEYOU               => \__( 'Moneyou', 'pronamic_ideal' ),
 					IssuerIdIDeal::REGIOBANK             => \__( 'RegioBank', 'pronamic_ideal' ),
 					IssuerIdIDeal::REVOLUT               => \__( 'Revolut', 'pronamic_ideal' ),
 					IssuerIdIDeal::SNS                   => \__( 'SNS Bank', 'pronamic_ideal' ),
@@ -137,7 +136,7 @@ class Gateway extends Core_Gateway {
 
 		$transaction->set_purchase_id( $payment->format_string( (string) $this->config->get_purchase_id() ) );
 		$transaction->set_return_url( $payment->get_return_url() );
-		$transaction->set_brand_id( BrandId::from_core( $payment->get_method() ) );
+		$transaction->set_brand_id( BrandId::from_core( $payment->get_payment_method() ) );
 		$transaction->set_descriptor( DataHelper::sanitize_an( (string) $payment->get_description(), 127 ) );
 
 		$payment_request = new PaymentRequest( $header, $transaction );
@@ -146,7 +145,7 @@ class Gateway extends Core_Gateway {
 		if ( BrandId::IDEAL === $transaction->get_brand_id() ) {
 			$bank = new BankDetails();
 
-			$bank->set_issuer_id( $payment->get_issuer() );
+			$bank->set_issuer_id( $payment->get_meta( 'issuer' ) );
 
 			$payment_request->set_bank( $bank );
 		}

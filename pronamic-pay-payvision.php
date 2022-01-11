@@ -4,7 +4,7 @@
  * Plugin URI: https://www.pronamic.eu/plugins/pronamic-pay-payvision/
  * Description: Extend the Pronamic Pay plugin with the Payvision gateway to receive payments with Payvision through a variety of WordPress plugins.
  *
- * Version: 2.0.0
+ * Version: 3.0.0
  * Requires at least: 4.7
  *
  * Author: Pronamic
@@ -20,7 +20,7 @@
  * GitHub URI: https://github.com/wp-pay-gateways/payvision
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2021 Pronamic
+ * @copyright 2005-2022 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\Adyen
  */

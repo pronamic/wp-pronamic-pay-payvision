@@ -3,7 +3,7 @@
  * Issuer ID iDEAL
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2021 Pronamic
+ * @copyright 2005-2022 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Gateways\Payvision
  */
@@ -88,13 +88,6 @@ class IssuerIdIDeal {
 	 * @var string
 	 */
 	const BUNQ = '110';
-
-	/**
-	 * Moneyou.
-	 *
-	 * @var string
-	 */
-	const MONEYOU = '120';
 
 	/**
 	 * Handelsbanken.
