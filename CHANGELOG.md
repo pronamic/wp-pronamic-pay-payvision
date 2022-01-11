@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased][unreleased]
 -
 
+## [3.0.0] - 2022-01-11
+### Changed
+- Updated to https://github.com/pronamic/wp-pay-core/releases/tag/4.0.0.
+
+### Removed
+- Removed Moneyou iDEAL issuer.
+
 ## [2.0.0] - 2021-08-05
 - Updated to `pronamic/wp-pay-core` version `3.0.0`.
 - Updated to `pronamic/wp-money` version `2.0.0`.
@@ -30,7 +37,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 1.0.0 - 2020-11-18
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/adyen/compare/2.0.0...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/adyen/compare/3.0.0...HEAD
+[3.0.0]: https://github.com/wp-pay-gateways/payvision/compare/2.0.0...3.0.0
 [2.0.0]: https://github.com/wp-pay-gateways/payvision/compare/1.1.2...2.0.0
 [1.1.2]: https://github.com/wp-pay-gateways/payvision/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/wp-pay-gateways/payvision/compare/1.1.0...1.1.1
