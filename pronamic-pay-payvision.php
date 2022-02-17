@@ -28,7 +28,23 @@
 add_filter(
 	'pronamic_pay_gateways',
 	function( $gateways ) {
-		$gateways[] = new \Pronamic\WordPress\Pay\Gateways\Payvision\Integration();
+		$gateways[] = new \Pronamic\WordPress\Pay\Gateways\Payvision\Integration(
+			array(
+				'id'            => 'payvision',
+				'name'          => 'Payvision',
+				'mode'          => 'live',
+				'system_url'    => \Pronamic\WordPress\Pay\Gateways\Payvision\SystemAddress::LIVE_SYSTEM,
+			)
+		);
+
+		$gateways[] = new \Pronamic\WordPress\Pay\Gateways\Payvision\Integration(
+			array(
+				'id'            => 'payvision-staging',
+				'name'          => 'Payvision - Staging',
+				'mode'          => 'test',
+				'system_url'    => \Pronamic\WordPress\Pay\Gateways\Payvision\SystemAddress::STAGING_SYSTEM,
+			)
+		);
 
 		return $gateways;
 	}
