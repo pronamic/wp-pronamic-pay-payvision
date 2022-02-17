@@ -72,7 +72,7 @@ class Config extends GatewayConfig implements \JsonSerializable {
 	 * @param string $store_id    Store ID.
 	 */
 	public function __construct( $system_url, $business_id, $username, $password, $store_id ) {
-		$this->system_url  = system_url;
+		$this->system_url  = $system_url;
 		$this->business_id = $business_id;
 		$this->username    = $username;
 		$this->password    = $password;
