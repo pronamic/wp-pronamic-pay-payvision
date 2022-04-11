@@ -4,7 +4,7 @@
  * Plugin URI: https://www.pronamic.eu/plugins/pronamic-pay-payvision/
  * Description: Extend the Pronamic Pay plugin with the Payvision gateway to receive payments with Payvision through a variety of WordPress plugins.
  *
- * Version: 3.0.0
+ * Version: 3.1.0
  * Requires at least: 4.7
  *
  * Author: Pronamic
@@ -28,7 +28,23 @@
 add_filter(
 	'pronamic_pay_gateways',
 	function( $gateways ) {
-		$gateways[] = new \Pronamic\WordPress\Pay\Gateways\Payvision\Integration();
+		$gateways[] = new \Pronamic\WordPress\Pay\Gateways\Payvision\Integration(
+			array(
+				'id'            => 'payvision',
+				'name'          => 'Payvision',
+				'mode'          => 'live',
+				'system_url'    => \Pronamic\WordPress\Pay\Gateways\Payvision\SystemAddress::LIVE_SYSTEM,
+			)
+		);
+
+		$gateways[] = new \Pronamic\WordPress\Pay\Gateways\Payvision\Integration(
+			array(
+				'id'            => 'payvision-staging',
+				'name'          => 'Payvision - Staging',
+				'mode'          => 'test',
+				'system_url'    => \Pronamic\WordPress\Pay\Gateways\Payvision\SystemAddress::STAGING_SYSTEM,
+			)
+		);
 
 		return $gateways;
 	}

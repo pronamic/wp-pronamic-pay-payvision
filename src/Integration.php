@@ -28,6 +28,13 @@ class Integration extends AbstractGatewayIntegration {
 	const REST_ROUTE_NAMESPACE = 'pronamic-pay/payvision/v1';
 
 	/**
+	 * System URL.
+	 *
+	 * @var string
+	 */
+	private $system_url;
+
+	/**
 	 * Construct Payvision integration.
 	 *
 	 * @param array<string, array<string>> $args Arguments.
@@ -38,6 +45,8 @@ class Integration extends AbstractGatewayIntegration {
 			array(
 				'id'            => 'payvision',
 				'name'          => 'Payvision',
+				'mode'          => 'live',
+				'system_url'    => SystemAddress::LIVE_SYSTEM,
 				'provider'      => 'payvision',
 				'url'           => \__( 'https://www.payvision.com/', 'pronamic_ideal' ),
 				'product_url'   => \__( 'https://www.payvision.com/', 'pronamic_ideal' ),
@@ -51,6 +60,8 @@ class Integration extends AbstractGatewayIntegration {
 		);
 
 		parent::__construct( $args );
+
+		$this->system_url = $args['system_url'];
 	}
 
 	/**
@@ -172,14 +183,13 @@ class Integration extends AbstractGatewayIntegration {
 	 * @return Config
 	 */
 	public function get_config( $post_id ) {
-		$mode        = $this->get_meta( $post_id, 'mode' );
 		$business_id = $this->get_meta( $post_id, 'payvision_business_id' );
 		$username    = $this->get_meta( $post_id, 'payvision_username' );
 		$password    = $this->get_meta( $post_id, 'payvision_password' );
 		$store_id    = $this->get_meta( $post_id, 'payvision_store_id' );
 		$purchase_id = $this->get_meta( $post_id, 'payvision_purchase_id' );
 
-		$config = new Config( $mode, $business_id, $username, $password, $store_id );
+		$config = new Config( $this->system_url, $business_id, $username, $password, $store_id );
 
 		if ( '' !== $purchase_id ) {
 			$config->set_purchase_id( $purchase_id );
@@ -197,6 +207,10 @@ class Integration extends AbstractGatewayIntegration {
 	public function get_gateway( $post_id ) {
 		$config = $this->get_config( $post_id );
 
-		return new Gateway( $config );
+		$gateway = new Gateway( $config );
+
+		$gateway->set_mode( $this->get_mode() );
+
+		return $gateway;
 	}
 }

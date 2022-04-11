@@ -21,6 +21,13 @@ use Pronamic\WordPress\Pay\Core\GatewayConfig;
  */
 class Config extends GatewayConfig implements \JsonSerializable {
 	/**
+	 * System URL.
+	 *
+	 * @var string
+	 */
+	private $system_url;
+
+	/**
 	 * Business Id.
 	 *
 	 * @var string
@@ -58,14 +65,14 @@ class Config extends GatewayConfig implements \JsonSerializable {
 	/**
 	 * Construct config object.
 	 *
-	 * @param string $mode        Mode.
+	 * @param string $system_url  System URL.
 	 * @param string $business_id Business Id.
 	 * @param string $username    Username.
 	 * @param string $password    Password.
 	 * @param string $store_id    Store ID.
 	 */
-	public function __construct( $mode, $business_id, $username, $password, $store_id ) {
-		$this->mode        = $mode;
+	public function __construct( $system_url, $business_id, $username, $password, $store_id ) {
+		$this->system_url  = $system_url;
 		$this->business_id = $business_id;
 		$this->username    = $username;
 		$this->password    = $password;
@@ -116,11 +123,7 @@ class Config extends GatewayConfig implements \JsonSerializable {
 	 * @return string
 	 */
 	public function get_endpoint_url( $path ) {
-		if ( Gateway::MODE_TEST === $this->mode ) {
-			return SystemAddress::STAGING_SYSTEM . $path;
-		}
-
-		return SystemAddress::LIVE_SYSTEM . $path;
+		return $this->system_url . $path;
 	}
 
 	/**
@@ -149,7 +152,6 @@ class Config extends GatewayConfig implements \JsonSerializable {
 	 */
 	public function jsonSerialize() {
 		$data = array(
-			'mode'        => $this->mode,
 			'business_id' => $this->business_id,
 			'username'    => $this->username,
 			'password'    => $this->password,
