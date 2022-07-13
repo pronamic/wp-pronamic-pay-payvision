@@ -41,19 +41,10 @@ class GatewayTest extends \WP_UnitTestCase {
 
 		$gateway = new Gateway( $config );
 
-		$this->assertTrue( $gateway->payment_method_is_required() );
-
-		// iDEAL issuers.
-		$issuers = $gateway->get_issuers();
-
-		$this->assertCount( 1, $issuers );
-
 		// Payment methods.
-		$methods = $gateway->get_supported_payment_methods();
+		$methods = $gateway->get_payment_methods();
 
 		$this->assertCount( 2, $methods );
-		$this->assertContains( PaymentMethods::IDEAL, $methods );
-		$this->assertContains( PaymentMethods::PAYPAL, $methods );
 	}
 
 	/**

@@ -74,12 +74,11 @@ class Gateway extends Core_Gateway {
 	}
 
 	/**
-	 * Get issuers
+	 * Get issuers.
 	 *
-	 * @see Core_Gateway::get_issuers()
 	 * @return array<int, array<string, array<string>>>
 	 */
-	public function get_issuers() {
+	private function get_issuers() {
 		return array(
 			array(
 				'options' => array(
