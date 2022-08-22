@@ -13,7 +13,10 @@ namespace Pronamic\WordPress\Pay\Gateways\Payvision;
 use Pronamic\WordPress\Pay\Core\Gateway as Core_Gateway;
 use Pronamic\WordPress\Pay\Core\PaymentMethod;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
-use Pronamic\WordPress\Pay\Core\SelectField;
+use Pronamic\WordPress\Pay\Fields\CachedCallbackOptions;
+use Pronamic\WordPress\Pay\Fields\IDealIssuerSelectField;
+use Pronamic\WordPress\Pay\Fields\SelectField;
+use Pronamic\WordPress\Pay\Fields\SelectFieldOption;
 use Pronamic\WordPress\Pay\Payments\Payment;
 
 /**
@@ -45,7 +48,7 @@ class Gateway extends Core_Gateway {
 	 * @param Config $config Config.
 	 */
 	public function __construct( Config $config ) {
-		parent::__construct( $config );
+		parent::__construct();
 
 		$this->config = $config;
 
@@ -62,10 +65,14 @@ class Gateway extends Core_Gateway {
 		// Methods.
 		$ideal_payment_method = new PaymentMethod( PaymentMethods::IDEAL );
 
-		$ideal_issuer_field = new SelectField( 'ideal-issuer' );
-		$ideal_issuer_field->set_options_callback( function() {
-			return $this->get_ideal_issuers();
-		} );
+		$ideal_issuer_field = new IDealIssuerSelectField( 'ideal-issuer' );
+
+		$ideal_issuer_field->set_options( new CachedCallbackOptions(
+			function() {
+				return $this->get_ideal_issuers();
+			},
+			'pronamic_pay_ideal_issuers_' . \md5( \wp_json_encode( $config ) )
+		) );
 
 		$ideal_payment_method->add_field( $ideal_issuer_field );
 
@@ -79,24 +86,28 @@ class Gateway extends Core_Gateway {
 	 * @return array<int, array<string, array<string>>>
 	 */
 	private function get_ideal_issuers() {
-		return array(
-			array(
-				'options' => array(
-					IssuerIdIDeal::ABN_AMRO              => \__( 'ABN Amro', 'pronamic_ideal' ),
-					IssuerIdIDeal::ING                   => \__( 'ING', 'pronamic_ideal' ),
-					IssuerIdIDeal::RABOBANK              => \__( 'Rabobank', 'pronamic_ideal' ),
-					IssuerIdIDeal::ASN                   => \__( 'ASN Bank', 'pronamic_ideal' ),
-					IssuerIdIDeal::BUNQ                  => \__( 'Bunq', 'pronamic_ideal' ),
-					IssuerIdIDeal::HANDELSBANKEN         => \__( 'Handelsbanken', 'pronamic_ideal' ),
-					IssuerIdIDeal::KNAB                  => \__( 'Knab', 'pronamic_ideal' ),
-					IssuerIdIDeal::REGIOBANK             => \__( 'RegioBank', 'pronamic_ideal' ),
-					IssuerIdIDeal::REVOLUT               => \__( 'Revolut', 'pronamic_ideal' ),
-					IssuerIdIDeal::SNS                   => \__( 'SNS Bank', 'pronamic_ideal' ),
-					IssuerIdIDeal::TRIODOS               => \__( 'Triodos Bank', 'pronamic_ideal' ),
-					IssuerIdIDeal::VAN_LANSCHOT_BANKIERS => \__( 'Van Lanschot', 'pronamic_ideal' ),
-				),
-			),
-		);
+		$items = [
+			IssuerIdIDeal::ABN_AMRO              => \__( 'ABN Amro', 'pronamic_ideal' ),
+			IssuerIdIDeal::ING                   => \__( 'ING', 'pronamic_ideal' ),
+			IssuerIdIDeal::RABOBANK              => \__( 'Rabobank', 'pronamic_ideal' ),
+			IssuerIdIDeal::ASN                   => \__( 'ASN Bank', 'pronamic_ideal' ),
+			IssuerIdIDeal::BUNQ                  => \__( 'Bunq', 'pronamic_ideal' ),
+			IssuerIdIDeal::HANDELSBANKEN         => \__( 'Handelsbanken', 'pronamic_ideal' ),
+			IssuerIdIDeal::KNAB                  => \__( 'Knab', 'pronamic_ideal' ),
+			IssuerIdIDeal::REGIOBANK             => \__( 'RegioBank', 'pronamic_ideal' ),
+			IssuerIdIDeal::REVOLUT               => \__( 'Revolut', 'pronamic_ideal' ),
+			IssuerIdIDeal::SNS                   => \__( 'SNS Bank', 'pronamic_ideal' ),
+			IssuerIdIDeal::TRIODOS               => \__( 'Triodos Bank', 'pronamic_ideal' ),
+			IssuerIdIDeal::VAN_LANSCHOT_BANKIERS => \__( 'Van Lanschot', 'pronamic_ideal' ),
+		];
+
+		$options = [];
+
+		foreach ( $items as $key => $value ) {
+			$options[] = new SelectFieldOption( $key, $value );
+		}
+
+		return $options;
 	}
 
 	/**
