@@ -1,6 +1,6 @@
 {
   "name": "payvision",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "Payvision driver for the WordPress payment processing library.",
   "repository": {
     "type": "git",
