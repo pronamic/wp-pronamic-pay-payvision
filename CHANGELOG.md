@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased][unreleased]
 -
 
+## [3.2.0] - Unreleased
+- Integration objects are no longer constructed, Payvision no longer exists.
+
 ## [3.1.0] - 2022-04-11
 - No longer use core mode.
 
@@ -40,7 +43,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 1.0.0 - 2020-11-18
 - First release.
 
-[unreleased]: https://github.com/wp-pay-gateways/adyen/compare/3.1.0...HEAD
+[unreleased]: https://github.com/wp-pay-gateways/adyen/compare/3.2.0...HEAD
+[3.2.0]: https://github.com/wp-pay-gateways/payvision/compare/3.1.0...3.2.0
 [3.1.0]: https://github.com/wp-pay-gateways/payvision/compare/3.0.0...3.1.0
 [3.0.0]: https://github.com/wp-pay-gateways/payvision/compare/2.0.0...3.0.0
 [2.0.0]: https://github.com/wp-pay-gateways/payvision/compare/1.1.2...2.0.0

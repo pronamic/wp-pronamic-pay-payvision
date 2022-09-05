@@ -1,6 +1,6 @@
 {
   "name": "payvision",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "Payvision driver for the WordPress payment processing library.",
   "repository": {
     "type": "git",
@@ -36,6 +36,7 @@
     "eslint": "eslint . --ext .json --ext .js"
   },
   "devDependencies": {
+    "@wordpress/env": "^5.2.0",
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
