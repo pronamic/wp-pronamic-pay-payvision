@@ -1,0 +1,10 @@
+{
+	"core": null,
+	"plugins": [
+		".",
+		"../../../"
+	],
+	"config": {
+		"PRONAMIC_PAY_DEBUG": true
+	}
+}
