@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased][unreleased]
 -
 
-## [3.2.0] - Unreleased
+## [3.2.0] - 2022-09-05
 - Integration objects are no longer constructed, Payvision no longer exists.
 
 ## [3.1.0] - 2022-04-11
